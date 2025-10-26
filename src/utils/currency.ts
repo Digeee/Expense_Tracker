@@ -1,13 +1,26 @@
 // Default currency symbol
-// const DEFAULT_CURRENCY = '$'
+const DEFAULT_CURRENCY = 'USD'
+
+// Currency configuration
+const CURRENCY_CONFIG: Record<string, { locale: string; currency: string; minimumFractionDigits?: number }> = {
+  USD: { locale: 'en-US', currency: 'USD' },
+  EUR: { locale: 'de-DE', currency: 'EUR' },
+  GBP: { locale: 'en-GB', currency: 'GBP' },
+  JPY: { locale: 'ja-JP', currency: 'JPY', minimumFractionDigits: 0 },
+  CAD: { locale: 'en-CA', currency: 'CAD' },
+  AUD: { locale: 'en-AU', currency: 'AUD' },
+  LKR: { locale: 'si-LK', currency: 'LKR' }
+}
 
 // Format number as currency
-export const formatCurrency = (amount: number): string => {
-  return new Intl.NumberFormat('en-US', {
+export const formatCurrency = (amount: number, currencyCode: string = DEFAULT_CURRENCY): string => {
+  const config = CURRENCY_CONFIG[currencyCode] || CURRENCY_CONFIG[DEFAULT_CURRENCY]
+  
+  return new Intl.NumberFormat(config.locale, {
     style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    currency: config.currency,
+    minimumFractionDigits: config.minimumFractionDigits ?? 2,
+    maximumFractionDigits: config.minimumFractionDigits ?? 2
   }).format(amount)
 }
 

@@ -10,6 +10,7 @@ import { useUserProfile } from '../hooks/useUserProfile'
 import { Expense } from '../types'
 import WelcomeBanner from './WelcomeBanner'
 import UserProfileModal from './UserProfileModal'
+import { formatCurrency } from '../utils/currency'
 
 const ExpenseTracker = () => {
   const { expenses, addExpense, updateExpense, deleteExpense } = useExpenses()
@@ -84,11 +85,11 @@ const ExpenseTracker = () => {
   }
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative bg-gradient-to-br from-elegant-light/30 via-white to-elegant-light/30 dark:from-elegant-darker dark:via-elegant-dark dark:to-elegant-darker">
       {/* Floating decorative elements */}
-      <div className="absolute top-20 left-10 w-24 h-24 rounded-full bg-purple-300 opacity-20 blur-xl animate-float"></div>
-      <div className="absolute top-40 right-20 w-32 h-32 rounded-full bg-blue-300 opacity-20 blur-xl animate-float animation-delay-2000"></div>
-      <div className="absolute bottom-40 left-1/4 w-20 h-20 rounded-full bg-indigo-300 opacity-20 blur-xl animate-float animation-delay-4000"></div>
+      <div className="absolute top-20 left-10 w-24 h-24 rounded-full bg-elegant-gold opacity-20 blur-xl animate-float"></div>
+      <div className="absolute top-40 right-20 w-32 h-32 rounded-full bg-elegant-plum opacity-20 blur-xl animate-float animation-delay-2000"></div>
+      <div className="absolute bottom-40 left-1/4 w-20 h-20 rounded-full bg-elegant-forest opacity-20 blur-xl animate-float animation-delay-4000"></div>
       
       <Header 
         onAddExpense={handleAddExpense} 
@@ -110,14 +111,14 @@ const ExpenseTracker = () => {
         
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
-            <div className="glass-card p-6">
+            <div className="card-elegant">
               <Filters 
                 filters={filters} 
                 onFilterChange={setFilters} 
               />
             </div>
             
-            <div className="glass-card p-6">
+            <div className="card-elegant">
               <ExpenseList 
                 expenses={filteredExpenses} 
                 onEdit={handleEditExpense} 
@@ -127,42 +128,35 @@ const ExpenseTracker = () => {
           </div>
           
           <div className="space-y-8">
-            <div className="glass-card p-6">
+            <div className="card-elegant">
               <Charts expenses={filteredExpenses} />
             </div>
             
             {/* Additional info card */}
-            <div className="glass-card p-6">
-              <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Expense Insights</h3>
+            <div className="card-elegant">
+              <h3 className="text-2xl font-serif-display font-bold text-elegant-dark dark:text-elegant-light mb-4 flex items-center gap-2">
+                <span className="text-2xl">📊</span>
+                Expense Insights
+              </h3>
               <div className="space-y-4">
-                <div className="flex justify-between items-center p-3 rounded-lg bg-white/20 dark:bg-black/20">
-                  <span className="text-gray-700 dark:text-gray-300">Total Transactions</span>
-                  <span className="font-bold text-gray-900 dark:text-white">{filteredExpenses.length}</span>
+                <div className="flex justify-between items-center p-3 rounded-lg bg-white/20 dark:bg-black/20 border border-elegant-gold/20 dark:border-elegant-plum/20">
+                  <span className="font-serif-body text-elegant-dark dark:text-elegant-light">Total Transactions</span>
+                  <span className="font-serif-heading font-bold text-elegant-dark dark:text-elegant-light">{filteredExpenses.length}</span>
                 </div>
-                <div className="flex justify-between items-center p-3 rounded-lg bg-white/20 dark:bg-black/20">
-                  <span className="text-gray-700 dark:text-gray-300">Avg. Daily Expense</span>
-                  <span className="font-bold text-gray-900 dark:text-white">
+                <div className="flex justify-between items-center p-3 rounded-lg bg-white/20 dark:bg-black/20 border border-elegant-gold/20 dark:border-elegant-plum/20">
+                  <span className="font-serif-body text-elegant-dark dark:text-elegant-light">Avg. Daily Expense</span>
+                  <span className="font-serif-heading font-bold text-elegant-dark dark:text-elegant-light">
                     {filteredExpenses.length > 0 
-                      ? new Intl.NumberFormat('en-US', {
-                          style: 'currency',
-                          currency: 'USD',
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2
-                        }).format(totalExpenses / filteredExpenses.length) 
-                      : '$0.00'}
+                      ? formatCurrency(totalExpenses / filteredExpenses.length, userProfile.currency)
+                      : formatCurrency(0, userProfile.currency)}
                   </span>
                 </div>
-                <div className="flex justify-between items-center p-3 rounded-lg bg-white/20 dark:bg-black/20">
-                  <span className="text-gray-700 dark:text-gray-300">Biggest Expense</span>
-                  <span className="font-bold text-gray-900 dark:text-white">
+                <div className="flex justify-between items-center p-3 rounded-lg bg-white/20 dark:bg-black/20 border border-elegant-gold/20 dark:border-elegant-plum/20">
+                  <span className="font-serif-body text-elegant-dark dark:text-elegant-light">Biggest Expense</span>
+                  <span className="font-serif-heading font-bold text-elegant-dark dark:text-elegant-light">
                     {filteredExpenses.length > 0 
-                      ? new Intl.NumberFormat('en-US', {
-                          style: 'currency',
-                          currency: 'USD',
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2
-                        }).format(Math.max(...filteredExpenses.map(e => e.amount))) 
-                      : '$0.00'}
+                      ? formatCurrency(Math.max(...filteredExpenses.map(e => e.amount)), userProfile.currency)
+                      : formatCurrency(0, userProfile.currency)}
                   </span>
                 </div>
               </div>

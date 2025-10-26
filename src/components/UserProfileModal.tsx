@@ -38,12 +38,12 @@ const UserProfileModal = ({ isOpen, onClose, userProfile, onSave }: UserProfileM
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-md">
-        <div className="flex justify-between items-center p-6 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-white">User Profile</h2>
+      <div className="card-elegant w-full max-w-md shadow-elegant-xl">
+        <div className="flex justify-between items-center p-6 border-b border-elegant-gold/20 dark:border-elegant-plum/20">
+          <h2 className="text-2xl font-serif-display font-bold text-elegant-dark dark:text-elegant-light">User Profile</h2>
           <button 
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+            className="text-elegant-dark hover:text-elegant-gold dark:text-elegant-light dark:hover:text-elegant-plum transition-colors duration-200"
           >
             <X size={24} />
           </button>
@@ -55,9 +55,9 @@ const UserProfileModal = ({ isOpen, onClose, userProfile, onSave }: UserProfileM
             <img 
               src={photo} 
               alt="Profile" 
-              className="w-24 h-24 rounded-full object-cover border-4 border-white dark:border-gray-700 shadow-md"
+              className="w-24 h-24 rounded-full object-cover border-4 border-elegant-gold shadow-md"
             />
-            <label className="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg cursor-pointer transition-colors">
+            <label className="mt-4 px-4 py-2 bg-gradient-to-r from-elegant-gold to-elegant-plum hover:from-elegant-plum hover:to-elegant-gold text-white font-serif-heading font-semibold rounded-lg cursor-pointer transition-all duration-300 transform hover:scale-105 shadow-lg">
               Change Photo
               <input 
                 type="file" 
@@ -70,41 +70,41 @@ const UserProfileModal = ({ isOpen, onClose, userProfile, onSave }: UserProfileM
           
           {/* Name Field */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-serif-heading font-medium text-elegant-dark dark:text-elegant-light mb-1">
               Name
             </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+              className="w-full input-elegant"
               placeholder="Enter your name"
             />
           </div>
           
           {/* Email Field */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-serif-heading font-medium text-elegant-dark dark:text-elegant-light mb-1">
               Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+              className="w-full input-elegant"
               placeholder="Enter your email"
             />
           </div>
           
           {/* Currency Field */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-serif-heading font-medium text-elegant-dark dark:text-elegant-light mb-1">
               Currency
             </label>
             <select
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+              className="w-full input-elegant"
             >
               <option value="USD">USD ($)</option>
               <option value="EUR">EUR (€)</option>
@@ -112,20 +112,21 @@ const UserProfileModal = ({ isOpen, onClose, userProfile, onSave }: UserProfileM
               <option value="JPY">JPY (¥)</option>
               <option value="CAD">CAD ($)</option>
               <option value="AUD">AUD ($)</option>
+              <option value="LKR">LKR (Rs)</option>
             </select>
           </div>
         </div>
         
-        <div className="flex justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex justify-end space-x-3 p-6 border-t border-elegant-gold/20 dark:border-elegant-plum/20">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+            className="px-4 py-2 font-serif-heading font-medium text-elegant-dark dark:text-elegant-light hover:bg-elegant-light/50 dark:hover:bg-elegant-darker rounded-lg transition-colors duration-200"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
-            className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+            className="px-4 py-2 bg-gradient-to-r from-elegant-gold to-elegant-plum hover:from-elegant-plum hover:to-elegant-gold text-white font-serif-heading font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
           >
             Save Changes
           </button>

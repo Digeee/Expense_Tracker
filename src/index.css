@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom font settings */
+body {
+  font-family: 'Crimson Text', serif;
+  @apply text-elegant-dark dark:text-elegant-light;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  @apply font-bold;
+}
+
 /* Custom glass morphism styles */
 .glass-card {
   background: rgba(255, 255, 255, 0.15);
@@ -27,6 +38,8 @@
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.18);
   transition: all 0.3s ease;
+  font-family: 'Cormorant Garamond', serif;
+  @apply font-medium;
 }
 
 .glass-button:hover {
@@ -138,4 +151,69 @@
 
 .dark .glass-button:hover {
   background: rgba(71, 85, 105, 0.4);
+}
+
+/* Elegant button styles */
+.btn-elegant {
+  @apply px-6 py-3 rounded-lg font-serif-heading font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  background: linear-gradient(135deg, #d4af37 0%, #f3e5ab 100%);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-elegant:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-elegant-dark {
+  @apply px-6 py-3 rounded-lg font-serif-heading font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  background: linear-gradient(135deg, #8e44ad 0%, #3498db 100%);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-elegant-dark:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Elegant text styles */
+.text-elegant-heading {
+  font-family: 'Playfair Display', serif;
+  @apply font-bold text-elegant-dark dark:text-elegant-light;
+}
+
+.text-elegant-body {
+  font-family: 'Crimson Text', serif;
+  @apply text-elegant-dark dark:text-elegant-light;
+}
+
+.text-elegant-display {
+  font-family: 'Cormorant Garamond', serif;
+  @apply font-semibold text-elegant-dark dark:text-elegant-light;
+}
+
+/* Elegant card styles */
+.card-elegant {
+  @apply rounded-2xl p-6 shadow-elegant transition-all duration-300;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.7) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.dark .card-elegant {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.5) 100%);
+  border: 1px solid rgba(142, 68, 173, 0.2);
+}
+
+/* Elegant input styles */
+.input-elegant {
+  font-family: 'Crimson Text', serif;
+  @apply px-4 py-3 rounded-lg border border-elegant-silver dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-elegant-gold dark:focus:ring-elegant-plum bg-white dark:bg-elegant-darker text-elegant-dark dark:text-elegant-light transition-all duration-300;
+}
+
+.input-elegant:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+.dark .input-elegant:focus {
+  border-color: #8e44ad;
+  box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.2);
 }

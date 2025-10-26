@@ -33,13 +33,13 @@ const Header = ({ onAddExpense, onOpenProfile, userProfilePhoto }: HeaderProps) 
   }
 
   return (
-    <header className="glass-card mx-4 mt-4 p-4 sticky top-4 z-10">
+    <header className="glass-card mx-4 mt-4 p-4 sticky top-4 z-10 rounded-2xl">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-2">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center animate-pulse-slow">
-            <span className="text-white font-bold text-lg">$</span>
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-elegant-gold to-elegant-plum flex items-center justify-center animate-pulse-slow shadow-lg">
+            <span className="text-white font-serif-heading font-bold text-xl">$</span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+          <h1 className="text-3xl font-serif-display font-bold bg-clip-text text-transparent bg-gradient-to-r from-elegant-gold to-elegant-plum dark:from-elegant-silver dark:to-elegant-plum">
             Expense Tracker
           </h1>
         </div>
@@ -47,31 +47,31 @@ const Header = ({ onAddExpense, onOpenProfile, userProfilePhoto }: HeaderProps) 
         <div className="flex items-center space-x-4">
           <button
             onClick={onOpenProfile}
-            className="flex items-center space-x-2 glass-button p-2 rounded-full"
+            className="flex items-center space-x-2 glass-button p-2 rounded-full hover:scale-110 transition-transform duration-300"
             aria-label="User profile"
           >
             {userProfilePhoto ? (
               <img 
                 src={userProfilePhoto} 
                 alt="Profile" 
-                className="w-8 h-8 rounded-full object-cover"
+                className="w-8 h-8 rounded-full object-cover border-2 border-elegant-gold"
               />
             ) : (
-              <User size={20} />
+              <User size={20} className="text-elegant-gold" />
             )}
           </button>
           
           <button
             onClick={toggleDarkMode}
-            className="glass-button p-2 rounded-full"
+            className="glass-button p-2 rounded-full hover:scale-110 transition-transform duration-300"
             aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
           >
-            {darkMode ? <Sun className="text-yellow-300" size={20} /> : <Moon className="text-gray-700" size={20} />}
+            {darkMode ? <Sun className="text-elegant-gold" size={20} /> : <Moon className="text-elegant-dark" size={20} />}
           </button>
           
           <button
             onClick={onAddExpense}
-            className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg"
+            className="flex items-center gap-2 bg-gradient-to-r from-elegant-gold to-elegant-plum hover:from-elegant-plum hover:to-elegant-gold text-white font-serif-heading font-semibold py-2 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-elegant-gold focus:ring-offset-2 shadow-lg"
           >
             <Plus size={20} />
             <span className="hidden sm:inline">Add Expense</span>

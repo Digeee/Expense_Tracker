@@ -1,12 +1,16 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line } from 'recharts'
 import { Expense } from '../types'
 import { formatCurrency } from '../utils/currency'
+import { useUserProfile } from '../hooks/useUserProfile'
 
 interface ChartsProps {
   expenses: Expense[]
 }
 
 const Charts = ({ expenses }: ChartsProps) => {
+  const { userProfile } = useUserProfile()
+  const currency = userProfile.currency || 'USD'
+
   // Prepare data for category breakdown pie chart
   const categoryData = expenses.reduce((acc, expense) => {
     const existing = acc.find(item => item.name === expense.category)
@@ -36,16 +40,16 @@ const Charts = ({ expenses }: ChartsProps) => {
   })
 
   // Colors for charts
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82ca9d']
+  const COLORS = ['#d4af37', '#8e44ad', '#228B22', '#800020', '#000080', '#82ca9d']
 
   // Custom tooltip for pie chart
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="glass-card p-4 border border-gray-300/50">
-          <p className="font-medium text-gray-900 dark:text-white">{`${payload[0].name}`}</p>
-          <p className="text-gray-700 dark:text-gray-300">{`Amount: ${formatCurrency(payload[0].value)}`}</p>
-          <p className="text-gray-500 dark:text-gray-400 text-sm">{`Percentage: ${((payload[0].value / categoryData.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%`}</p>
+        <div className="glass-card p-4 border border-elegant-gold/50 dark:border-elegant-plum/50 rounded-xl shadow-elegant">
+          <p className="font-serif-heading font-semibold text-elegant-dark dark:text-elegant-light">{`${payload[0].name}`}</p>
+          <p className="font-serif-body text-elegant-dark dark:text-elegant-light">{`Amount: ${formatCurrency(payload[0].value, currency)}`}</p>
+          <p className="font-serif-body text-sm text-gray-500 dark:text-gray-400">{`Percentage: ${((payload[0].value / categoryData.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%`}</p>
         </div>
       )
     }
@@ -56,19 +60,28 @@ const Charts = ({ expenses }: ChartsProps) => {
   const CustomLineTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="glass-card p-4 border border-gray-300/50">
-          <p className="font-medium text-gray-900 dark:text-white">{`Month: ${label}`}</p>
-          <p className="text-gray-700 dark:text-gray-300">{`Total: ${formatCurrency(payload[0].value)}`}</p>
+        <div className="glass-card p-4 border border-elegant-gold/50 dark:border-elegant-plum/50 rounded-xl shadow-elegant">
+          <p className="font-serif-heading font-semibold text-elegant-dark dark:text-elegant-light">{`Month: ${label}`}</p>
+          <p className="font-serif-body text-elegant-dark dark:text-elegant-light">{`Total: ${formatCurrency(payload[0].value, currency)}`}</p>
         </div>
       )
     }
     return null
   }
 
+  // Format Y-axis values with currency
+  const formatYAxis = (value: number) => {
+    // For simplicity, we'll format based on the selected currency
+    // We'll show the currency symbol and the value
+    const formatted = formatCurrency(value, currency);
+    // Extract just the numeric part for the axis
+    return formatted.replace(/[^\d.,]/g, '') === '' ? '0' : formatted.replace(/[^\d.,]/g, '');
+  }
+
   return (
     <div className="space-y-8">
       <div>
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+        <h3 className="text-xl font-serif-display font-bold text-elegant-dark dark:text-elegant-light mb-4 flex items-center gap-2">
           <span className="text-xl">📊</span>
           Category Breakdown
         </h3>
@@ -91,19 +104,21 @@ const Charts = ({ expenses }: ChartsProps) => {
                   ))}
                 </Pie>
                 <Tooltip content={<CustomTooltip />} />
-                <Legend />
+                <Legend 
+                  formatter={(value) => <span className="font-serif-body text-elegant-dark dark:text-elegant-light">{value}</span>}
+                />
               </PieChart>
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="h-80 flex items-center justify-center text-gray-500 dark:text-gray-400 glass-card">
+          <div className="h-80 flex items-center justify-center text-elegant-dark dark:text-elegant-light glass-card rounded-xl">
             No data available
           </div>
         )}
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+        <h3 className="text-xl font-serif-display font-bold text-elegant-dark dark:text-elegant-light mb-4 flex items-center gap-2">
           <span className="text-xl">📈</span>
           Monthly Trend
         </h3>
@@ -114,19 +129,26 @@ const Charts = ({ expenses }: ChartsProps) => {
                 data={monthlyData}
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                <XAxis dataKey="month" stroke="#94a3b8" />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(212, 175, 55, 0.2)" />
+                <XAxis 
+                  dataKey="month" 
+                  stroke="#d4af37" 
+                  tick={{ fill: '#d4af37', fontFamily: 'Crimson Text, serif' }}
+                />
                 <YAxis 
-                  tickFormatter={(value) => `$${value}`} 
+                  tickFormatter={(value) => formatYAxis(value)} 
                   domain={[0, 'dataMax + 100']}
-                  stroke="#94a3b8"
+                  stroke="#d4af37"
+                  tick={{ fill: '#d4af37', fontFamily: 'Crimson Text, serif' }}
                 />
                 <Tooltip content={<CustomLineTooltip />} />
-                <Legend />
+                <Legend 
+                  formatter={(value) => <span className="font-serif-body text-elegant-dark dark:text-elegant-light">{value}</span>}
+                />
                 <Line 
                   type="monotone" 
                   dataKey="amount" 
-                  stroke="#8884d8" 
+                  stroke="#d4af37" 
                   activeDot={{ r: 8 }} 
                   strokeWidth={2}
                   name="Total Expenses"
@@ -135,7 +157,7 @@ const Charts = ({ expenses }: ChartsProps) => {
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="h-80 flex items-center justify-center text-gray-500 dark:text-gray-400 glass-card">
+          <div className="h-80 flex items-center justify-center text-elegant-dark dark:text-elegant-light glass-card rounded-xl">
             No data available
           </div>
         )}
