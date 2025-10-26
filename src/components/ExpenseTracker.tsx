@@ -6,12 +6,16 @@ import ExpenseFormModal from './ExpenseFormModal'
 import Filters from './Filters'
 import Charts from './Charts'
 import { useExpenses } from '../hooks/useExpenses'
+import { useUserProfile } from '../hooks/useUserProfile'
 import { Expense } from '../types'
 import WelcomeBanner from './WelcomeBanner'
+import UserProfileModal from './UserProfileModal'
 
 const ExpenseTracker = () => {
   const { expenses, addExpense, updateExpense, deleteExpense } = useExpenses()
+  const { userProfile, updateUserProfile } = useUserProfile()
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
   const [editingExpense, setEditingExpense] = useState<Expense | null>(null)
   const [filters, setFilters] = useState({
     category: 'all',
@@ -67,6 +71,18 @@ const ExpenseTracker = () => {
     setEditingExpense(null)
   }
 
+  const handleOpenProfile = () => {
+    setIsProfileModalOpen(true)
+  }
+
+  const handleCloseProfileModal = () => {
+    setIsProfileModalOpen(false)
+  }
+
+  const handleSaveProfile = (profile: any) => {
+    updateUserProfile(profile)
+  }
+
   return (
     <div className="min-h-screen relative">
       {/* Floating decorative elements */}
@@ -74,7 +90,11 @@ const ExpenseTracker = () => {
       <div className="absolute top-40 right-20 w-32 h-32 rounded-full bg-blue-300 opacity-20 blur-xl animate-float animation-delay-2000"></div>
       <div className="absolute bottom-40 left-1/4 w-20 h-20 rounded-full bg-indigo-300 opacity-20 blur-xl animate-float animation-delay-4000"></div>
       
-      <Header onAddExpense={handleAddExpense} />
+      <Header 
+        onAddExpense={handleAddExpense} 
+        onOpenProfile={handleOpenProfile}
+        userProfilePhoto={userProfile.photo}
+      />
       
       <main className="container mx-auto px-4 py-8">
         {showWelcomeBanner && (
@@ -156,6 +176,13 @@ const ExpenseTracker = () => {
         onClose={handleCloseModal}
         onSave={handleSaveExpense}
         expense={editingExpense}
+      />
+      
+      <UserProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={handleCloseProfileModal}
+        userProfile={userProfile}
+        onSave={handleSaveProfile}
       />
     </div>
   )

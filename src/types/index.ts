@@ -18,3 +18,10 @@ export interface FilterOptions {
   startDate: string
   endDate: string
 }
+
+export interface UserProfile {
+  name: string
+  email: string
+  photo: string
+  currency: string
+}

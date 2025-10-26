@@ -1,11 +1,13 @@
-import { Plus, Sun, Moon } from 'lucide-react'
+import { Plus, Sun, Moon, User } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
 interface HeaderProps {
   onAddExpense: () => void
+  onOpenProfile: () => void
+  userProfilePhoto: string
 }
 
-const Header = ({ onAddExpense }: HeaderProps) => {
+const Header = ({ onAddExpense, onOpenProfile, userProfilePhoto }: HeaderProps) => {
   const [darkMode, setDarkMode] = useState(false)
 
   useEffect(() => {
@@ -43,6 +45,22 @@ const Header = ({ onAddExpense }: HeaderProps) => {
         </div>
         
         <div className="flex items-center space-x-4">
+          <button
+            onClick={onOpenProfile}
+            className="flex items-center space-x-2 glass-button p-2 rounded-full"
+            aria-label="User profile"
+          >
+            {userProfilePhoto ? (
+              <img 
+                src={userProfilePhoto} 
+                alt="Profile" 
+                className="w-8 h-8 rounded-full object-cover"
+              />
+            ) : (
+              <User size={20} />
+            )}
+          </button>
+          
           <button
             onClick={toggleDarkMode}
             className="glass-button p-2 rounded-full"
