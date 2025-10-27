@@ -6,17 +6,12 @@ import ExpenseFormModal from './ExpenseFormModal'
 import Filters from './Filters'
 import Charts from './Charts'
 import { useExpenses } from '../hooks/useExpenses'
-import { useUserProfile } from '../hooks/useUserProfile'
 import { Expense } from '../types'
 import WelcomeBanner from './WelcomeBanner'
-import UserProfileModal from './UserProfileModal'
-import { formatCurrency } from '../utils/currency'
 
 const ExpenseTracker = () => {
   const { expenses, addExpense, updateExpense, deleteExpense } = useExpenses()
-  const { userProfile, updateUserProfile } = useUserProfile()
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
   const [editingExpense, setEditingExpense] = useState<Expense | null>(null)
   const [filters, setFilters] = useState({
     category: 'all',
@@ -72,30 +67,14 @@ const ExpenseTracker = () => {
     setEditingExpense(null)
   }
 
-  const handleOpenProfile = () => {
-    setIsProfileModalOpen(true)
-  }
-
-  const handleCloseProfileModal = () => {
-    setIsProfileModalOpen(false)
-  }
-
-  const handleSaveProfile = (profile: any) => {
-    updateUserProfile(profile)
-  }
-
   return (
-    <div className="min-h-screen relative bg-gradient-to-br from-elegant-light/30 via-white to-elegant-light/30 dark:from-elegant-darker dark:via-elegant-dark dark:to-elegant-darker">
+    <div className="min-h-screen relative">
       {/* Floating decorative elements */}
-      <div className="absolute top-20 left-10 w-24 h-24 rounded-full bg-elegant-gold opacity-20 blur-xl animate-float"></div>
-      <div className="absolute top-40 right-20 w-32 h-32 rounded-full bg-elegant-plum opacity-20 blur-xl animate-float animation-delay-2000"></div>
-      <div className="absolute bottom-40 left-1/4 w-20 h-20 rounded-full bg-elegant-forest opacity-20 blur-xl animate-float animation-delay-4000"></div>
+      <div className="absolute top-20 left-10 w-24 h-24 rounded-full bg-blue-300 opacity-20 blur-xl animate-float"></div>
+      <div className="absolute top-40 right-20 w-32 h-32 rounded-full bg-indigo-300 opacity-20 blur-xl animate-float animation-delay-2000"></div>
+      <div className="absolute bottom-40 left-1/4 w-20 h-20 rounded-full bg-blue-300 opacity-20 blur-xl animate-float animation-delay-4000"></div>
       
-      <Header 
-        onAddExpense={handleAddExpense} 
-        onOpenProfile={handleOpenProfile}
-        userProfilePhoto={userProfile.photo}
-      />
+      <Header onAddExpense={handleAddExpense} />
       
       <main className="container mx-auto px-4 py-8">
         {showWelcomeBanner && (
@@ -111,14 +90,14 @@ const ExpenseTracker = () => {
         
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
-            <div className="card-elegant">
+            <div className="card-enhanced p-6 shadow-enhanced">
               <Filters 
                 filters={filters} 
                 onFilterChange={setFilters} 
               />
             </div>
             
-            <div className="card-elegant">
+            <div className="card-enhanced p-6 shadow-enhanced">
               <ExpenseList 
                 expenses={filteredExpenses} 
                 onEdit={handleEditExpense} 
@@ -128,35 +107,42 @@ const ExpenseTracker = () => {
           </div>
           
           <div className="space-y-8">
-            <div className="card-elegant">
+            <div className="card-enhanced p-6 shadow-enhanced">
               <Charts expenses={filteredExpenses} />
             </div>
             
             {/* Additional info card */}
-            <div className="card-elegant">
-              <h3 className="text-2xl font-serif-display font-bold text-elegant-dark dark:text-elegant-light mb-4 flex items-center gap-2">
-                <span className="text-2xl">📊</span>
-                Expense Insights
-              </h3>
+            <div className="card-enhanced p-6 shadow-enhanced">
+              <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-4">Expense Insights</h3>
               <div className="space-y-4">
-                <div className="flex justify-between items-center p-3 rounded-lg bg-white/20 dark:bg-black/20 border border-elegant-gold/20 dark:border-elegant-plum/20">
-                  <span className="font-serif-body text-elegant-dark dark:text-elegant-light">Total Transactions</span>
-                  <span className="font-serif-heading font-bold text-elegant-dark dark:text-elegant-light">{filteredExpenses.length}</span>
+                <div className="flex justify-between items-center p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border-professional">
+                  <span className="text-body text-gray-700 dark:text-gray-300">Total Transactions</span>
+                  <span className="font-bold text-gray-900 dark:text-white">{filteredExpenses.length}</span>
                 </div>
-                <div className="flex justify-between items-center p-3 rounded-lg bg-white/20 dark:bg-black/20 border border-elegant-gold/20 dark:border-elegant-plum/20">
-                  <span className="font-serif-body text-elegant-dark dark:text-elegant-light">Avg. Daily Expense</span>
-                  <span className="font-serif-heading font-bold text-elegant-dark dark:text-elegant-light">
+                <div className="flex justify-between items-center p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border-professional">
+                  <span className="text-body text-gray-700 dark:text-gray-300">Avg. Daily Expense</span>
+                  <span className="font-bold text-gray-900 dark:text-white">
                     {filteredExpenses.length > 0 
-                      ? formatCurrency(totalExpenses / filteredExpenses.length, userProfile.currency)
-                      : formatCurrency(0, userProfile.currency)}
+                      ? new Intl.NumberFormat('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                        }).format(totalExpenses / filteredExpenses.length) 
+                      : '$0.00'}
                   </span>
                 </div>
-                <div className="flex justify-between items-center p-3 rounded-lg bg-white/20 dark:bg-black/20 border border-elegant-gold/20 dark:border-elegant-plum/20">
-                  <span className="font-serif-body text-elegant-dark dark:text-elegant-light">Biggest Expense</span>
-                  <span className="font-serif-heading font-bold text-elegant-dark dark:text-elegant-light">
+                <div className="flex justify-between items-center p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border-professional">
+                  <span className="text-body text-gray-700 dark:text-gray-300">Biggest Expense</span>
+                  <span className="font-bold text-gray-900 dark:text-white">
                     {filteredExpenses.length > 0 
-                      ? formatCurrency(Math.max(...filteredExpenses.map(e => e.amount)), userProfile.currency)
-                      : formatCurrency(0, userProfile.currency)}
+                      ? new Intl.NumberFormat('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                        }).format(Math.max(...filteredExpenses.map(e => e.amount))) 
+                      : '$0.00'}
                   </span>
                 </div>
               </div>
@@ -170,13 +156,6 @@ const ExpenseTracker = () => {
         onClose={handleCloseModal}
         onSave={handleSaveExpense}
         expense={editingExpense}
-      />
-      
-      <UserProfileModal
-        isOpen={isProfileModalOpen}
-        onClose={handleCloseProfileModal}
-        userProfile={userProfile}
-        onSave={handleSaveProfile}
       />
     </div>
   )

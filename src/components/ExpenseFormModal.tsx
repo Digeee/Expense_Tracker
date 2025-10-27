@@ -129,14 +129,14 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="card-elegant w-full max-w-md max-h-[90vh] overflow-y-auto shadow-elegant-xl"
+            className="card-enhanced w-full max-w-md max-h-[90vh] overflow-y-auto shadow-enhanced-xl"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
           >
-            <div className="px-6 py-4 border-b border-elegant-gold/20 dark:border-elegant-plum/20 flex justify-between items-center">
-              <h2 className="text-2xl font-serif-display font-bold text-elegant-dark dark:text-elegant-light">
+            <div className="px-6 py-4 border-b border-professional flex justify-between items-center">
+              <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">
                 {expense ? 'Edit Expense' : 'Add New Expense'}
               </h2>
               <button
@@ -144,7 +144,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 className="glass-button p-1.5 rounded-full hover:scale-110 transition-transform duration-200"
                 aria-label="Close"
               >
-                <X size={24} className="text-elegant-dark dark:text-elegant-light" />
+                <X size={24} className="text-gray-700 dark:text-gray-300" />
               </button>
             </div>
             
@@ -152,7 +152,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
               <div className="space-y-4">
                 {/* Title */}
                 <div>
-                  <label htmlFor="title" className="block text-sm font-serif-heading font-medium text-elegant-dark dark:text-elegant-light mb-1">
+                  <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Title *
                   </label>
                   <div className="relative">
@@ -161,7 +161,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                       type="text"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
-                      className={`w-full input-elegant ${errors.title ? 'border-red-500 focus:ring-red-500' : ''}`}
+                      className={`w-full input-enhanced rounded-lg ${errors.title ? 'border-red-500 focus:ring-red-500' : ''}`}
                       placeholder="Dinner, Gas, etc."
                     />
                   </div>
@@ -175,11 +175,11 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 
                 {/* Amount */}
                 <div>
-                  <label htmlFor="amount" className="block text-sm font-serif-heading font-medium text-elegant-dark dark:text-elegant-light mb-1">
+                  <label htmlFor="amount" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Amount *
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-elegant-dark dark:text-elegant-light">
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
                       {getCurrencySymbol()}
                     </span>
                     <input
@@ -189,7 +189,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                       onChange={(e) => setAmount(e.target.value)}
                       min="0.01"
                       step="0.01"
-                      className={`w-full pl-8 pr-4 py-3 input-elegant ${errors.amount ? 'border-red-500 focus:ring-red-500' : ''}`}
+                      className={`w-full pl-8 pr-4 py-3 input-enhanced rounded-lg ${errors.amount ? 'border-red-500 focus:ring-red-500' : ''}`}
                       placeholder="0.00"
                     />
                   </div>
@@ -203,21 +203,21 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 
                 {/* Category */}
                 <div>
-                  <label htmlFor="category" className="block text-sm font-serif-heading font-medium text-elegant-dark dark:text-elegant-light mb-1">
+                  <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Category *
                   </label>
                   <select
                     id="category"
                     value={category}
                     onChange={handleCategoryChange}
-                    className={`w-full input-elegant ${errors.category ? 'border-red-500 focus:ring-red-500' : ''}`}
+                    className={`w-full input-enhanced rounded-lg ${errors.category ? 'border-red-500 focus:ring-red-500' : ''}`}
                   >
                     {categories.map((cat) => (
-                      <option key={cat} value={cat}>
+                      <option key={cat} value={cat} className="bg-white dark:bg-gray-800">
                         {cat}
                       </option>
                     ))}
-                    <option value="custom">+ Add Custom Category</option>
+                    <option value="custom" className="bg-white dark:bg-gray-800">+ Add Custom Category</option>
                   </select>
                   {errors.category && (
                     <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400">
@@ -229,7 +229,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 
                 {/* Date */}
                 <div>
-                  <label htmlFor="date" className="block text-sm font-serif-heading font-medium text-elegant-dark dark:text-elegant-light mb-1">
+                  <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Date *
                   </label>
                   <input
@@ -237,7 +237,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className={`w-full input-elegant ${errors.date ? 'border-red-500 focus:ring-red-500' : ''}`}
+                    className={`w-full input-enhanced rounded-lg ${errors.date ? 'border-red-500 focus:ring-red-500' : ''}`}
                   />
                   {errors.date && (
                     <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400">
@@ -249,7 +249,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 
                 {/* Notes */}
                 <div>
-                  <label htmlFor="notes" className="block text-sm font-serif-heading font-medium text-elegant-dark dark:text-elegant-light mb-1">
+                  <label htmlFor="notes" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Notes
                   </label>
                   <textarea
@@ -257,7 +257,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     rows={3}
-                    className="w-full input-elegant"
+                    className="w-full input-enhanced rounded-lg"
                     placeholder="Additional details (optional)"
                   />
                 </div>
@@ -267,13 +267,13 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2 font-serif-heading font-medium text-elegant-dark dark:text-elegant-light hover:bg-elegant-light/50 dark:hover:bg-elegant-darker rounded-lg transition-colors duration-200"
+                  className="px-4 py-2 font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-gradient-to-r from-elegant-gold to-elegant-plum hover:from-elegant-plum hover:to-elegant-gold text-white font-serif-heading font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-elegant-gold focus:ring-offset-2 shadow-lg"
+                  className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg"
                 >
                   {expense ? 'Update Expense' : 'Add Expense'}
                 </button>

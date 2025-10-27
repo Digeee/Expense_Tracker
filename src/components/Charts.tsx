@@ -40,16 +40,16 @@ const Charts = ({ expenses }: ChartsProps) => {
   })
 
   // Colors for charts
-  const COLORS = ['#d4af37', '#8e44ad', '#228B22', '#800020', '#000080', '#82ca9d']
+  const COLORS = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#82ca9d']
 
   // Custom tooltip for pie chart
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="glass-card p-4 border border-elegant-gold/50 dark:border-elegant-plum/50 rounded-xl shadow-elegant">
-          <p className="font-serif-heading font-semibold text-elegant-dark dark:text-elegant-light">{`${payload[0].name}`}</p>
-          <p className="font-serif-body text-elegant-dark dark:text-elegant-light">{`Amount: ${formatCurrency(payload[0].value, currency)}`}</p>
-          <p className="font-serif-body text-sm text-gray-500 dark:text-gray-400">{`Percentage: ${((payload[0].value / categoryData.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%`}</p>
+        <div className="glass-card p-4 border border-gray-300/50 dark:border-gray-600/50 rounded-xl shadow-enhanced">
+          <p className="font-heading font-semibold text-gray-900 dark:text-white">{`${payload[0].name}`}</p>
+          <p className="text-body text-gray-700 dark:text-gray-300">{`Amount: ${formatCurrency(payload[0].value, currency)}`}</p>
+          <p className="text-body text-sm text-gray-500 dark:text-gray-400">{`Percentage: ${((payload[0].value / categoryData.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%`}</p>
         </div>
       )
     }
@@ -60,9 +60,9 @@ const Charts = ({ expenses }: ChartsProps) => {
   const CustomLineTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="glass-card p-4 border border-elegant-gold/50 dark:border-elegant-plum/50 rounded-xl shadow-elegant">
-          <p className="font-serif-heading font-semibold text-elegant-dark dark:text-elegant-light">{`Month: ${label}`}</p>
-          <p className="font-serif-body text-elegant-dark dark:text-elegant-light">{`Total: ${formatCurrency(payload[0].value, currency)}`}</p>
+        <div className="glass-card p-4 border border-gray-300/50 dark:border-gray-600/50 rounded-xl shadow-enhanced">
+          <p className="font-heading font-semibold text-gray-900 dark:text-white">{`Month: ${label}`}</p>
+          <p className="text-body text-gray-700 dark:text-gray-300">{`Total: ${formatCurrency(payload[0].value, currency)}`}</p>
         </div>
       )
     }
@@ -81,7 +81,7 @@ const Charts = ({ expenses }: ChartsProps) => {
   return (
     <div className="space-y-8">
       <div>
-        <h3 className="text-xl font-serif-display font-bold text-elegant-dark dark:text-elegant-light mb-4 flex items-center gap-2">
+        <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
           <span className="text-xl">📊</span>
           Category Breakdown
         </h3>
@@ -105,20 +105,20 @@ const Charts = ({ expenses }: ChartsProps) => {
                 </Pie>
                 <Tooltip content={<CustomTooltip />} />
                 <Legend 
-                  formatter={(value) => <span className="font-serif-body text-elegant-dark dark:text-elegant-light">{value}</span>}
+                  formatter={(value) => <span className="text-body text-gray-700 dark:text-gray-300">{value}</span>}
                 />
               </PieChart>
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="h-80 flex items-center justify-center text-elegant-dark dark:text-elegant-light glass-card rounded-xl">
+          <div className="h-80 flex items-center justify-center text-gray-500 dark:text-gray-400 card-enhanced rounded-xl">
             No data available
           </div>
         )}
       </div>
 
       <div>
-        <h3 className="text-xl font-serif-display font-bold text-elegant-dark dark:text-elegant-light mb-4 flex items-center gap-2">
+        <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
           <span className="text-xl">📈</span>
           Monthly Trend
         </h3>
@@ -129,26 +129,26 @@ const Charts = ({ expenses }: ChartsProps) => {
                 data={monthlyData}
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(212, 175, 55, 0.2)" />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(59, 130, 246, 0.2)" />
                 <XAxis 
                   dataKey="month" 
-                  stroke="#d4af37" 
-                  tick={{ fill: '#d4af37', fontFamily: 'Crimson Text, serif' }}
+                  stroke="#3b82f6" 
+                  tick={{ fill: '#3b82f6', fontFamily: 'Inter, sans-serif' }}
                 />
                 <YAxis 
                   tickFormatter={(value) => formatYAxis(value)} 
                   domain={[0, 'dataMax + 100']}
-                  stroke="#d4af37"
-                  tick={{ fill: '#d4af37', fontFamily: 'Crimson Text, serif' }}
+                  stroke="#3b82f6"
+                  tick={{ fill: '#3b82f6', fontFamily: 'Inter, sans-serif' }}
                 />
                 <Tooltip content={<CustomLineTooltip />} />
                 <Legend 
-                  formatter={(value) => <span className="font-serif-body text-elegant-dark dark:text-elegant-light">{value}</span>}
+                  formatter={(value) => <span className="text-body text-gray-700 dark:text-gray-300">{value}</span>}
                 />
                 <Line 
                   type="monotone" 
                   dataKey="amount" 
-                  stroke="#d4af37" 
+                  stroke="#3b82f6" 
                   activeDot={{ r: 8 }} 
                   strokeWidth={2}
                   name="Total Expenses"
@@ -157,7 +157,7 @@ const Charts = ({ expenses }: ChartsProps) => {
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="h-80 flex items-center justify-center text-elegant-dark dark:text-elegant-light glass-card rounded-xl">
+          <div className="h-80 flex items-center justify-center text-gray-500 dark:text-gray-400 card-enhanced rounded-xl">
             No data available
           </div>
         )}

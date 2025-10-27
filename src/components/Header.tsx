@@ -1,9 +1,10 @@
-import { Plus, Sun, Moon, Download } from 'lucide-react'
+import { Plus, Sun, Moon, Download, User } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useUserProfile } from '../hooks/useUserProfile'
 import { useExpenses } from '../hooks/useExpenses'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
+import UserProfileModal from './UserProfileModal'
 
 interface HeaderProps {
   onAddExpense: () => void
@@ -11,7 +12,8 @@ interface HeaderProps {
 
 const Header = ({ onAddExpense }: HeaderProps) => {
   const [darkMode, setDarkMode] = useState(false)
-  const { userProfile } = useUserProfile()
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
+  const { userProfile, updateUserProfile } = useUserProfile()
   const { expenses } = useExpenses()
 
   useEffect(() => {
@@ -70,7 +72,7 @@ const Header = ({ onAddExpense }: HeaderProps) => {
       body: tableData,
       startY: 75,
       styles: { fontSize: 10 },
-      headStyles: { fillColor: [212, 175, 55] }, // Elegant gold color
+      headStyles: { fillColor: [59, 130, 246] }, // Professional blue color
       alternateRowStyles: { fillColor: [240, 240, 240] },
       theme: 'grid'
     })
@@ -86,44 +88,61 @@ const Header = ({ onAddExpense }: HeaderProps) => {
   }
 
   return (
-    <header className="glass-card mx-4 mt-4 p-4 sticky top-4 z-10">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-elegant-gold to-elegant-plum flex items-center justify-center animate-pulse-slow">
-            <span className="text-white font-bold text-lg">$</span>
+    <>
+      <header className="glass-card mx-4 mt-4 p-4 sticky top-4 z-10 shadow-enhanced">
+        <div className="container mx-auto flex justify-between items-center">
+          <div className="flex items-center space-x-3">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center animate-pulse-slow shadow-md">
+              <span className="text-white font-bold text-xl">$</span>
+            </div>
+            <h1 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 dark:text-white">
+              Expense Tracker
+            </h1>
           </div>
-          <h1 className="text-2xl md:text-3xl font-serif-display font-bold bg-clip-text text-transparent bg-gradient-to-r from-elegant-gold to-elegant-plum dark:from-elegant-silver dark:to-elegant-plum">
-            Expense Tracker
-          </h1>
-        </div>
-        
-        <div className="flex items-center space-x-4">
-          <button
-            onClick={downloadPDF}
-            className="glass-button p-2 rounded-full hover:scale-110 transition-transform duration-200"
-            aria-label="Download PDF"
-          >
-            <Download className="text-elegant-dark dark:text-elegant-light" size={20} />
-          </button>
           
-          <button
-            onClick={toggleDarkMode}
-            className="glass-button p-2 rounded-full hover:scale-110 transition-transform duration-200"
-            aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-          >
-            {darkMode ? <Sun className="text-yellow-300" size={20} /> : <Moon className="text-gray-700" size={20} />}
-          </button>
-          
-          <button
-            onClick={onAddExpense}
-            className="flex items-center gap-2 bg-gradient-to-r from-elegant-gold to-elegant-plum hover:from-elegant-plum hover:to-elegant-gold text-white font-serif-heading font-medium py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-elegant-gold focus:ring-offset-2 shadow-lg"
-          >
-            <Plus size={20} />
-            <span className="hidden sm:inline">Add Expense</span>
-          </button>
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={downloadPDF}
+              className="glass-button p-2.5 rounded-xl hover:scale-110 transition-transform duration-200 shadow-sm"
+              aria-label="Download PDF"
+            >
+              <Download className="text-gray-700 dark:text-gray-300" size={20} />
+            </button>
+            
+            <button
+              onClick={() => setIsProfileModalOpen(true)}
+              className="glass-button p-2.5 rounded-xl hover:scale-110 transition-transform duration-200 shadow-sm"
+              aria-label="User Profile"
+            >
+              <User className="text-gray-700 dark:text-gray-300" size={20} />
+            </button>
+            
+            <button
+              onClick={toggleDarkMode}
+              className="glass-button p-2.5 rounded-xl hover:scale-110 transition-transform duration-200 shadow-sm"
+              aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {darkMode ? <Sun className="text-yellow-400" size={20} /> : <Moon className="text-gray-700" size={20} />}
+            </button>
+            
+            <button
+              onClick={onAddExpense}
+              className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium py-2.5 px-5 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg"
+            >
+              <Plus size={20} />
+              <span className="hidden sm:inline font-medium">Add Expense</span>
+            </button>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+      
+      <UserProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+        userProfile={userProfile}
+        onSave={updateUserProfile}
+      />
+    </>
   )
 }
 
