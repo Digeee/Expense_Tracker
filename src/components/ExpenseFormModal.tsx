@@ -129,19 +129,19 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="card-enhanced w-full max-w-md max-h-[90vh] overflow-y-auto shadow-enhanced-xl"
+            className="neumorphic w-full max-w-md max-h-[90vh] overflow-y-auto shadow-3d transform-3d-hover"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
           >
             <div className="px-6 py-4 border-b border-professional flex justify-between items-center">
-              <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">
+              <h2 className="text-3xl font-display font-extrabold text-gray-900 dark:text-white">
                 {expense ? 'Edit Expense' : 'Add New Expense'}
               </h2>
               <button
                 onClick={onClose}
-                className="glass-button p-1.5 rounded-full hover:scale-110 transition-transform duration-200"
+                className="neumorphic-btn p-2 rounded-full transform-3d-lift"
                 aria-label="Close"
               >
                 <X size={24} className="text-gray-700 dark:text-gray-300" />
@@ -152,7 +152,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
               <div className="space-y-4">
                 {/* Title */}
                 <div>
-                  <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label htmlFor="title" className="block text-sm font-extrabold text-gray-700 dark:text-gray-300 mb-1">
                     Title *
                   </label>
                   <div className="relative">
@@ -161,12 +161,12 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                       type="text"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
-                      className={`w-full input-enhanced rounded-lg ${errors.title ? 'border-red-500 focus:ring-red-500' : ''}`}
+                      className={`w-full input-enhanced rounded-xl font-extrabold ${errors.title ? 'border-red-500 focus:ring-red-500' : ''}`}
                       placeholder="Dinner, Gas, etc."
                     />
                   </div>
                   {errors.title && (
-                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400">
+                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400 font-bold">
                       <AlertCircle size={16} className="mr-1" />
                       {errors.title}
                     </div>
@@ -175,11 +175,11 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 
                 {/* Amount */}
                 <div>
-                  <label htmlFor="amount" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label htmlFor="amount" className="block text-sm font-extrabold text-gray-700 dark:text-gray-300 mb-1">
                     Amount *
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 font-extrabold">
                       {getCurrencySymbol()}
                     </span>
                     <input
@@ -189,12 +189,12 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                       onChange={(e) => setAmount(e.target.value)}
                       min="0.01"
                       step="0.01"
-                      className={`w-full pl-8 pr-4 py-3 input-enhanced rounded-lg ${errors.amount ? 'border-red-500 focus:ring-red-500' : ''}`}
+                      className={`w-full pl-8 pr-4 py-3 input-enhanced rounded-xl font-extrabold ${errors.amount ? 'border-red-500 focus:ring-red-500' : ''}`}
                       placeholder="0.00"
                     />
                   </div>
                   {errors.amount && (
-                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400">
+                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400 font-bold">
                       <AlertCircle size={16} className="mr-1" />
                       {errors.amount}
                     </div>
@@ -203,24 +203,24 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 
                 {/* Category */}
                 <div>
-                  <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label htmlFor="category" className="block text-sm font-extrabold text-gray-700 dark:text-gray-300 mb-1">
                     Category *
                   </label>
                   <select
                     id="category"
                     value={category}
                     onChange={handleCategoryChange}
-                    className={`w-full input-enhanced rounded-lg ${errors.category ? 'border-red-500 focus:ring-red-500' : ''}`}
+                    className={`w-full input-enhanced rounded-xl font-extrabold ${errors.category ? 'border-red-500 focus:ring-red-500' : ''}`}
                   >
                     {categories.map((cat) => (
-                      <option key={cat} value={cat} className="bg-white dark:bg-gray-800">
+                      <option key={cat} value={cat} className="font-extrabold">
                         {cat}
                       </option>
                     ))}
-                    <option value="custom" className="bg-white dark:bg-gray-800">+ Add Custom Category</option>
+                    <option value="custom" className="font-extrabold">+ Add Custom Category</option>
                   </select>
                   {errors.category && (
-                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400">
+                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400 font-bold">
                       <AlertCircle size={16} className="mr-1" />
                       {errors.category}
                     </div>
@@ -229,7 +229,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 
                 {/* Date */}
                 <div>
-                  <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label htmlFor="date" className="block text-sm font-extrabold text-gray-700 dark:text-gray-300 mb-1">
                     Date *
                   </label>
                   <input
@@ -237,10 +237,10 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className={`w-full input-enhanced rounded-lg ${errors.date ? 'border-red-500 focus:ring-red-500' : ''}`}
+                    className={`w-full input-enhanced rounded-xl font-extrabold ${errors.date ? 'border-red-500 focus:ring-red-500' : ''}`}
                   />
                   {errors.date && (
-                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400">
+                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400 font-bold">
                       <AlertCircle size={16} className="mr-1" />
                       {errors.date}
                     </div>
@@ -249,7 +249,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 
                 {/* Notes */}
                 <div>
-                  <label htmlFor="notes" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label htmlFor="notes" className="block text-sm font-extrabold text-gray-700 dark:text-gray-300 mb-1">
                     Notes
                   </label>
                   <textarea
@@ -257,7 +257,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     rows={3}
-                    className="w-full input-enhanced rounded-lg"
+                    className="w-full input-enhanced rounded-xl font-bold"
                     placeholder="Additional details (optional)"
                   />
                 </div>
@@ -267,13 +267,13 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2 font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+                  className="px-4 py-2 font-extrabold text-gray-700 dark:text-gray-300 neumorphic-btn rounded-xl transform-3d-hover"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg"
+                  className="px-4 py-2 neumorphic-btn text-gray-900 dark:text-white font-extrabold rounded-xl transform-3d-lift transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
                   {expense ? 'Update Expense' : 'Add Expense'}
                 </button>

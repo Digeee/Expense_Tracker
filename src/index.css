@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Import professional fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Roboto+Slab:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Roboto+Slab:wght@300;400;500;600;700;800;900&display=swap');
 
 /* Custom font settings */
 body {
@@ -13,7 +13,111 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Playfair Display', serif;
-  @apply font-bold;
+  @apply font-extrabold;
+}
+
+/* Neumorphism styles */
+.neumorphic {
+  background: linear-gradient(145deg, #e6e6e6, #ffffff);
+  box-shadow: 8px 8px 16px #d9d9d9, 
+              -8px -8px 16px #ffffff;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.dark .neumorphic {
+  background: linear-gradient(145deg, #0d1117, #1a1f27);
+  box-shadow: 8px 8px 16px #0a0d12, 
+              -8px -8px 16px #1d232d;
+}
+
+.neumorphic-inset {
+  background: #e6e6e6;
+  box-shadow: inset 4px 4px 8px #d9d9d9, 
+              inset -4px -4px 8px #ffffff;
+  border-radius: 12px;
+}
+
+.dark .neumorphic-inset {
+  background: #0d1117;
+  box-shadow: inset 4px 4px 8px #0a0d12, 
+              inset -4px -4px 8px #1d232d;
+}
+
+.neumorphic-btn {
+  background: linear-gradient(145deg, #e6e6e6, #ffffff);
+  box-shadow: 4px 4px 8px #d9d9d9, 
+              -4px -4px 8px #ffffff;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.neumorphic-btn:hover {
+  box-shadow: 2px 2px 4px #d9d9d9, 
+              -2px -2px 4px #ffffff;
+  transform: translateY(2px);
+}
+
+.neumorphic-btn:active {
+  box-shadow: inset 4px 4px 8px #d9d9d9, 
+              inset -4px -4px 8px #ffffff;
+}
+
+.dark .neumorphic-btn {
+  background: linear-gradient(145deg, #0d1117, #1a1f27);
+  box-shadow: 4px 4px 8px #0a0d12, 
+              -4px -4px 8px #1d232d;
+}
+
+.dark .neumorphic-btn:hover {
+  box-shadow: 2px 2px 4px #0a0d12, 
+              -2px -2px 4px #1d232d;
+}
+
+.dark .neumorphic-btn:active {
+  box-shadow: inset 4px 4px 8px #0a0d12, 
+              inset -4px -4px 8px #1d232d;
+}
+
+/* 3D Transform Effects */
+.transform-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.transform-3d-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.transform-3d-hover:hover {
+  transform: translateZ(10px) rotateX(5deg) rotateY(5deg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.transform-3d-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.transform-3d-lift:hover {
+  transform: translateZ(20px);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* 3D Rotating Elements */
+.animate-rotate-3d {
+  animation: rotate3d 20s linear infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes rotate3d {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+  }
 }
 
 /* Custom glass morphism styles */
@@ -42,7 +146,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid rgba(255, 255, 255, 0.25);
   transition: all 0.3s ease;
   font-family: 'Inter', sans-serif;
-  @apply font-medium;
+  @apply font-bold;
 }
 
 .glass-button:hover {
@@ -158,59 +262,65 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Enhanced UI elements */
 .btn-primary {
-  @apply px-5 py-2.5 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  @apply px-5 py-2.5 rounded-lg font-extrabold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2;
   background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-family: 'Inter', sans-serif;
+  letter-spacing: 0.5px;
 }
 
 .btn-primary:hover {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px) translateZ(10px);
 }
 
 .btn-secondary {
-  @apply px-5 py-2.5 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  @apply px-5 py-2.5 rounded-lg font-extrabold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2;
   background: linear-gradient(135deg, #64748b 0%, #475569 100%);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-family: 'Inter', sans-serif;
+  letter-spacing: 0.5px;
 }
 
 .btn-secondary:hover {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px) translateZ(10px);
 }
 
 /* Enhanced text styles */
 .text-heading {
   font-family: 'Playfair Display', serif;
-  @apply font-bold text-gray-900 dark:text-white;
+  @apply font-extrabold text-gray-900 dark:text-white;
 }
 
 .text-body {
   font-family: 'Inter', sans-serif;
-  @apply text-gray-700 dark:text-gray-300;
+  @apply text-gray-700 dark:text-gray-300 font-medium;
 }
 
 .text-display {
   font-family: 'Roboto Slab', serif;
-  @apply font-semibold text-gray-900 dark:text-white;
+  @apply font-extrabold text-gray-900 dark:text-white;
 }
 
 /* Enhanced card styles */
 .card-enhanced {
-  @apply rounded-2xl p-6 shadow-lg transition-all duration-300;
+  @apply rounded-2xl p-6 transition-all duration-300 transform-3d-hover;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.85) 100%);
   border: 1px solid rgba(209, 213, 219, 0.3);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .dark .card-enhanced {
   background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.7) 100%);
   border: 1px solid rgba(55, 65, 81, 0.5);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
 }
 
 /* Enhanced input styles */
 .input-enhanced {
   font-family: 'Inter', sans-serif;
-  @apply px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-all duration-300;
+  @apply px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-all duration-300 font-bold;
 }
 
 .input-enhanced:focus {
@@ -248,4 +358,27 @@ h1, h2, h3, h4, h5, h6 {
 
 .dark .border-professional {
   border: 1px solid rgba(55, 65, 81, 0.5);
+}
+
+/* Floating decorative 3D elements */
+.floating-3d-element {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+  box-shadow: 0 0 50px rgba(59, 130, 246, 0.3);
+  animation: float 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.floating-3d-element::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  z-index: -1;
+  transform: translateZ(-20px);
 }

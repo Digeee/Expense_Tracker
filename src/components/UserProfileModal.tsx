@@ -38,14 +38,14 @@ const UserProfileModal = ({ isOpen, onClose, userProfile, onSave }: UserProfileM
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="card-enhanced w-full max-w-md shadow-enhanced-xl">
+      <div className="neumorphic w-full max-w-md shadow-3d transform-3d-hover">
         <div className="flex justify-between items-center p-6 border-b border-professional">
-          <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">User Profile</h2>
+          <h2 className="text-3xl font-display font-extrabold text-gray-900 dark:text-white">User Profile</h2>
           <button 
             onClick={onClose}
-            className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 transition-colors duration-200"
+            className="neumorphic-btn p-2 rounded-full transform-3d-hover"
           >
-            <X size={24} />
+            <X className="text-gray-700 dark:text-gray-300" size={24} />
           </button>
         </div>
         
@@ -55,9 +55,9 @@ const UserProfileModal = ({ isOpen, onClose, userProfile, onSave }: UserProfileM
             <img 
               src={photo} 
               alt="Profile" 
-              className="w-24 h-24 rounded-full object-cover border-4 border-blue-500 shadow-md"
+              className="w-24 h-24 rounded-full object-cover border-4 border-blue-500 shadow-3d transform-3d-hover"
             />
-            <label className="mt-4 px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-lg cursor-pointer transition-all duration-300 transform hover:scale-105 shadow-lg">
+            <label className="mt-4 px-4 py-2 neumorphic-btn text-gray-900 dark:text-white font-extrabold rounded-xl cursor-pointer transform-3d-hover transition-all duration-300">
               Change Photo
               <input 
                 type="file" 
@@ -70,41 +70,41 @@ const UserProfileModal = ({ isOpen, onClose, userProfile, onSave }: UserProfileM
           
           {/* Name Field */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-extrabold text-gray-700 dark:text-gray-300 mb-1">
               Name
             </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full input-enhanced rounded-lg"
+              className="w-full input-enhanced rounded-xl font-bold"
               placeholder="Enter your name"
             />
           </div>
           
           {/* Email Field */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-extrabold text-gray-700 dark:text-gray-300 mb-1">
               Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full input-enhanced rounded-lg"
+              className="w-full input-enhanced rounded-xl font-bold"
               placeholder="Enter your email"
             />
           </div>
           
           {/* Currency Field */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-extrabold text-gray-700 dark:text-gray-300 mb-1">
               Currency
             </label>
             <select
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
-              className="w-full input-enhanced rounded-lg"
+              className="w-full input-enhanced rounded-xl font-bold"
             >
               <option value="USD">USD ($)</option>
               <option value="EUR">EUR (€)</option>
@@ -120,13 +120,13 @@ const UserProfileModal = ({ isOpen, onClose, userProfile, onSave }: UserProfileM
         <div className="flex justify-end space-x-3 p-6 border-t border-professional">
           <button
             onClick={onClose}
-            className="px-4 py-2 font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+            className="px-4 py-2 font-extrabold text-gray-700 dark:text-gray-300 neumorphic-btn rounded-xl transform-3d-hover"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
-            className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+            className="px-4 py-2 neumorphic-btn text-gray-900 dark:text-white font-extrabold rounded-xl transform-3d-hover transition-all duration-300"
           >
             Save Changes
           </button>

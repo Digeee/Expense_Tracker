@@ -39,17 +39,17 @@ const ExpenseItem = ({ expense, onEdit, onDelete }: ExpenseItemProps) => {
 
   return (
     <motion.div 
-      className="grid grid-cols-12 gap-4 px-6 py-4"
+      className="grid grid-cols-12 gap-4 px-6 py-4 neumorphic shadow-3d transform-3d-hover"
       whileHover={{ x: 5 }}
       transition={{ type: "spring", stiffness: 300 }}
     >
       <div className="col-span-5">
-        <div className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
+        <div className="font-extrabold text-gray-900 dark:text-white flex items-center gap-2 text-lg">
           <span className="text-lg">{getCategoryIcon(expense.category)}</span>
           <span>{expense.title}</span>
         </div>
         {expense.notes && (
-          <div className="text-sm text-gray-500 dark:text-gray-400 mt-1 flex items-start gap-2">
+          <div className="text-sm text-gray-500 dark:text-gray-400 mt-1 flex items-start gap-2 font-bold">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
             </svg>
@@ -59,30 +59,30 @@ const ExpenseItem = ({ expense, onEdit, onDelete }: ExpenseItemProps) => {
       </div>
       
       <div className="col-span-2">
-        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getCategoryColor(expense.category)}`}>
+        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-extrabold ${getCategoryColor(expense.category)}`}>
           {expense.category}
         </span>
       </div>
       
-      <div className="col-span-2 text-gray-500 dark:text-gray-400">
+      <div className="col-span-2 text-gray-500 dark:text-gray-400 font-bold">
         {formatDate(expense.date)}
       </div>
       
-      <div className="col-span-2 text-right font-medium text-gray-900 dark:text-white">
+      <div className="col-span-2 text-right font-extrabold text-gray-900 dark:text-white text-lg">
         {formatCurrency(expense.amount)}
       </div>
       
       <div className="col-span-1 flex justify-end space-x-1">
         <button
           onClick={() => onEdit(expense)}
-          className="glass-button p-1.5 rounded-full hover:scale-110 transition-transform duration-200"
+          className="neumorphic-btn p-1.5 rounded-full transform-3d-hover"
           aria-label="Edit expense"
         >
           <Edit3 size={16} className="text-blue-600 dark:text-blue-400" />
         </button>
         <button
           onClick={() => onDelete(expense.id)}
-          className="glass-button p-1.5 rounded-full hover:scale-110 transition-transform duration-200"
+          className="neumorphic-btn p-1.5 rounded-full transform-3d-hover"
           aria-label="Delete expense"
         >
           <Trash2 size={16} className="text-red-600 dark:text-red-400" />

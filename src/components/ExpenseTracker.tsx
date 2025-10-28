@@ -69,10 +69,10 @@ const ExpenseTracker = () => {
 
   return (
     <div className="min-h-screen relative">
-      {/* Floating decorative elements */}
-      <div className="absolute top-20 left-10 w-24 h-24 rounded-full bg-blue-300 opacity-20 blur-xl animate-float"></div>
-      <div className="absolute top-40 right-20 w-32 h-32 rounded-full bg-indigo-300 opacity-20 blur-xl animate-float animation-delay-2000"></div>
-      <div className="absolute bottom-40 left-1/4 w-20 h-20 rounded-full bg-blue-300 opacity-20 blur-xl animate-float animation-delay-4000"></div>
+      {/* Floating decorative 3D elements */}
+      <div className="floating-3d-element top-20 left-10 w-24 h-24 animate-float"></div>
+      <div className="floating-3d-element top-40 right-20 w-32 h-32 animate-float animation-delay-2000"></div>
+      <div className="floating-3d-element bottom-40 left-1/4 w-20 h-20 animate-float animation-delay-4000"></div>
       
       <Header onAddExpense={handleAddExpense} />
       
@@ -90,14 +90,14 @@ const ExpenseTracker = () => {
         
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
-            <div className="card-enhanced p-6 shadow-enhanced">
+            <div className="card-enhanced p-6 shadow-enhanced transform-3d-hover">
               <Filters 
                 filters={filters} 
                 onFilterChange={setFilters} 
               />
             </div>
             
-            <div className="card-enhanced p-6 shadow-enhanced">
+            <div className="card-enhanced p-6 shadow-enhanced transform-3d-hover">
               <ExpenseList 
                 expenses={filteredExpenses} 
                 onEdit={handleEditExpense} 
@@ -107,21 +107,21 @@ const ExpenseTracker = () => {
           </div>
           
           <div className="space-y-8">
-            <div className="card-enhanced p-6 shadow-enhanced">
+            <div className="card-enhanced p-6 shadow-enhanced transform-3d-hover">
               <Charts expenses={filteredExpenses} />
             </div>
             
             {/* Additional info card */}
-            <div className="card-enhanced p-6 shadow-enhanced">
-              <h3 className="text-xl font-heading font-bold text-gray-900 dark:text-white mb-4">Expense Insights</h3>
+            <div className="card-enhanced p-6 shadow-enhanced transform-3d-hover">
+              <h3 className="text-2xl font-display font-extrabold text-gray-900 dark:text-white mb-4">Expense Insights</h3>
               <div className="space-y-4">
-                <div className="flex justify-between items-center p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border-professional">
-                  <span className="text-body text-gray-700 dark:text-gray-300">Total Transactions</span>
-                  <span className="font-bold text-gray-900 dark:text-white">{filteredExpenses.length}</span>
+                <div className="flex justify-between items-center p-3 rounded-lg neumorphic-inset">
+                  <span className="text-body text-gray-700 dark:text-gray-300 font-bold">Total Transactions</span>
+                  <span className="font-extrabold text-gray-900 dark:text-white">{filteredExpenses.length}</span>
                 </div>
-                <div className="flex justify-between items-center p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border-professional">
-                  <span className="text-body text-gray-700 dark:text-gray-300">Avg. Daily Expense</span>
-                  <span className="font-bold text-gray-900 dark:text-white">
+                <div className="flex justify-between items-center p-3 rounded-lg neumorphic-inset">
+                  <span className="text-body text-gray-700 dark:text-gray-300 font-bold">Avg. Daily Expense</span>
+                  <span className="font-extrabold text-gray-900 dark:text-white">
                     {filteredExpenses.length > 0 
                       ? new Intl.NumberFormat('en-US', {
                           style: 'currency',
@@ -132,9 +132,9 @@ const ExpenseTracker = () => {
                       : '$0.00'}
                   </span>
                 </div>
-                <div className="flex justify-between items-center p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 border-professional">
-                  <span className="text-body text-gray-700 dark:text-gray-300">Biggest Expense</span>
-                  <span className="font-bold text-gray-900 dark:text-white">
+                <div className="flex justify-between items-center p-3 rounded-lg neumorphic-inset">
+                  <span className="text-body text-gray-700 dark:text-gray-300 font-bold">Biggest Expense</span>
+                  <span className="font-extrabold text-gray-900 dark:text-white">
                     {filteredExpenses.length > 0 
                       ? new Intl.NumberFormat('en-US', {
                           style: 'currency',
