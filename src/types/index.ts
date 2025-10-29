@@ -5,6 +5,7 @@ export interface Expense {
   category: string
   date: string
   notes?: string
+  receiptImage?: string // Add this field for receipt images
 }
 
 export interface Category {

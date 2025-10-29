@@ -60,7 +60,8 @@ const Header = ({ onAddExpense }: HeaderProps) => {
       expense.title,
       expense.category,
       new Date(expense.date).toLocaleDateString(),
-      `${userProfile.currency || 'USD'} ${expense.amount.toFixed(2)}`
+      `${userProfile.currency || 'USD'} ${expense.amount.toFixed(2)}`,
+      expense.receiptImage ? 'Yes' : 'No'
     ])
     
     // Calculate total
@@ -68,7 +69,7 @@ const Header = ({ onAddExpense }: HeaderProps) => {
     
     // Add table
     autoTable(doc, {
-      head: [['Description', 'Category', 'Date', 'Amount']],
+      head: [['Description', 'Category', 'Date', 'Amount', 'Receipt']],
       body: tableData,
       startY: 75,
       styles: { fontSize: 10 },
@@ -89,13 +90,13 @@ const Header = ({ onAddExpense }: HeaderProps) => {
 
   return (
     <>
-      <header className="neumorphic mx-4 mt-4 p-4 sticky top-4 z-10 shadow-3d transform-3d">
+      <header className="glass-card mx-4 mt-4 p-4 sticky top-4 z-10 shadow-enhanced">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 rounded-xl neumorphic-btn flex items-center justify-center animate-pulse-slow transform-3d-hover">
-              <span className="text-gray-800 dark:text-white font-extrabold text-xl">$</span>
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center animate-pulse-slow shadow-md">
+              <span className="text-white font-bold text-xl">$</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-display font-extrabold text-gray-900 dark:text-white transform-3d-hover">
+            <h1 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 dark:text-white">
               Expense Tracker
             </h1>
           </div>
@@ -103,7 +104,7 @@ const Header = ({ onAddExpense }: HeaderProps) => {
           <div className="flex items-center space-x-3">
             <button
               onClick={downloadPDF}
-              className="neumorphic-btn p-2.5 rounded-xl transform-3d-hover"
+              className="glass-button p-2.5 rounded-xl hover:scale-110 transition-transform duration-200 shadow-sm"
               aria-label="Download PDF"
             >
               <Download className="text-gray-700 dark:text-gray-300" size={20} />
@@ -111,7 +112,7 @@ const Header = ({ onAddExpense }: HeaderProps) => {
             
             <button
               onClick={() => setIsProfileModalOpen(true)}
-              className="neumorphic-btn p-2.5 rounded-xl transform-3d-hover"
+              className="glass-button p-2.5 rounded-xl hover:scale-110 transition-transform duration-200 shadow-sm"
               aria-label="User Profile"
             >
               <User className="text-gray-700 dark:text-gray-300" size={20} />
@@ -119,7 +120,7 @@ const Header = ({ onAddExpense }: HeaderProps) => {
             
             <button
               onClick={toggleDarkMode}
-              className="neumorphic-btn p-2.5 rounded-xl transform-3d-hover"
+              className="glass-button p-2.5 rounded-xl hover:scale-110 transition-transform duration-200 shadow-sm"
               aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               {darkMode ? <Sun className="text-yellow-400" size={20} /> : <Moon className="text-gray-700" size={20} />}
@@ -127,10 +128,10 @@ const Header = ({ onAddExpense }: HeaderProps) => {
             
             <button
               onClick={onAddExpense}
-              className="flex items-center gap-2 neumorphic-btn text-gray-900 dark:text-white font-extrabold py-2.5 px-5 rounded-xl transform-3d-hover transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium py-2.5 px-5 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg"
             >
               <Plus size={20} />
-              <span className="hidden sm:inline font-extrabold">Add Expense</span>
+              <span className="hidden sm:inline font-medium">Add Expense</span>
             </button>
           </div>
         </div>
