@@ -152,19 +152,19 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="card-enhanced w-full max-w-md max-h-[90vh] overflow-y-auto shadow-enhanced-xl"
+            className="bg-white dark:bg-gray-800 w-full max-w-md max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
           >
-            <div className="px-6 py-4 border-b border-professional flex justify-between items-center">
-              <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">
+            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                 {expense ? 'Edit Expense' : 'Add New Expense'}
               </h2>
               <button
                 onClick={onClose}
-                className="glass-button p-1.5 rounded-full hover:scale-110 transition-transform duration-200"
+                className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
                 aria-label="Close"
               >
                 <X size={24} className="text-gray-700 dark:text-gray-300" />
@@ -184,7 +184,9 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                       type="text"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
-                      className={`w-full input-enhanced rounded-lg ${errors.title ? 'border-red-500 focus:ring-red-500' : ''}`}
+                      className={`w-full px-4 py-3 rounded-lg border ${
+                        errors.title ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+                      } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
                       placeholder="Dinner, Gas, etc."
                     />
                   </div>
@@ -212,7 +214,9 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                       onChange={(e) => setAmount(e.target.value)}
                       min="0.01"
                       step="0.01"
-                      className={`w-full pl-8 pr-4 py-3 input-enhanced rounded-lg ${errors.amount ? 'border-red-500 focus:ring-red-500' : ''}`}
+                      className={`w-full pl-8 pr-4 py-3 rounded-lg border ${
+                        errors.amount ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+                      } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
                       placeholder="0.00"
                     />
                   </div>
@@ -233,7 +237,9 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                     id="category"
                     value={category}
                     onChange={handleCategoryChange}
-                    className={`w-full input-enhanced rounded-lg ${errors.category ? 'border-red-500 focus:ring-red-500' : ''}`}
+                    className={`w-full px-4 py-3 rounded-lg border ${
+                      errors.category ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+                    } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
                   >
                     {categories.map((cat) => (
                       <option key={cat} value={cat} className="bg-white dark:bg-gray-800">
@@ -260,7 +266,9 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className={`w-full input-enhanced rounded-lg ${errors.date ? 'border-red-500 focus:ring-red-500' : ''}`}
+                    className={`w-full px-4 py-3 rounded-lg border ${
+                      errors.date ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+                    } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
                   />
                   {errors.date && (
                     <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400">
@@ -280,7 +288,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     rows={3}
-                    className="w-full input-enhanced rounded-lg"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     placeholder="Additional details (optional)"
                   />
                 </div>
@@ -301,7 +309,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                       <button
                         type="button"
                         onClick={removeReceiptImage}
-                        className="absolute top-2 right-2 glass-button p-1.5 rounded-full hover:scale-110 transition-transform duration-200"
+                        className="absolute top-2 right-2 p-1.5 rounded-full bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 shadow-md"
                         aria-label="Remove image"
                       >
                         <Trash2 size={16} className="text-red-600 dark:text-red-400" />
@@ -309,7 +317,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                     </div>
                   ) : (
                     <div className="flex items-center justify-center w-full">
-                      <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                      <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200">
                         <div className="flex flex-col items-center justify-center pt-5 pb-6">
                           <Upload className="w-8 h-8 mb-2 text-gray-500 dark:text-gray-400" />
                           <p className="text-sm text-gray-500 dark:text-gray-400">

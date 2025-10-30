@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Edit3, Trash2, Image as ImageIcon } from 'lucide-react'
+import { Edit3, Trash2, Image as ImageIcon, FileText } from 'lucide-react'
 import { Expense } from '../types'
 import { formatCurrency } from '../utils/currency'
 import { formatDate } from '../utils/date'
@@ -37,63 +37,83 @@ const ExpenseItem = ({ expense, onEdit, onDelete }: ExpenseItemProps) => {
     return icons[category] || '📋'
   }
 
+  // Get category image URL
+  const getCategoryImage = (category: string) => {
+    const images: Record<string, string> = {
+      Food: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=100&h=100&fit=crop',
+      Transport: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=100&h=100&fit=crop',
+      Bills: 'https://images.unsplash.com/photo-1580519542036-0ebef2b4d55d?w=100&h=100&fit=crop',
+      Shopping: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=100&h=100&fit=crop',
+      Leisure: 'https://images.unsplash.com/photo-1511527661596-7498f59c6a21?w=100&h=100&fit=crop',
+      Other: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=100&h=100&fit=crop'
+    }
+    return images[category] || images.Other
+  }
+
   return (
     <motion.div 
-      className="grid grid-cols-12 gap-4 px-6 py-4"
+      className="grid grid-cols-12 gap-4 px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-800/20 transition-colors duration-200"
       whileHover={{ x: 5 }}
       transition={{ type: "spring", stiffness: 300 }}
     >
       <div className="col-span-5">
-        <div className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
-          <span className="text-lg">{getCategoryIcon(expense.category)}</span>
-          <span>{expense.title}</span>
+        <div className="flex items-start gap-3">
+          <img 
+            src={getCategoryImage(expense.category)} 
+            alt={expense.category} 
+            className="w-12 h-12 rounded-lg object-cover border border-gray-200 dark:border-gray-700"
+          />
+          <div>
+            <div className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
+              <span className="text-lg">{getCategoryIcon(expense.category)}</span>
+              <span>{expense.title}</span>
+            </div>
+            {expense.notes && (
+              <div className="text-sm text-gray-500 dark:text-gray-400 mt-1 flex items-start gap-2">
+                <FileText size={14} className="mt-0.5 flex-shrink-0" />
+                <span>{expense.notes}</span>
+              </div>
+            )}
+            {expense.receiptImage && (
+              <div className="mt-2">
+                <button 
+                  onClick={() => window.open(expense.receiptImage, '_blank')}
+                  className="flex items-center text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200"
+                >
+                  <ImageIcon size={16} className="mr-1" />
+                  <span>View Receipt</span>
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-        {expense.notes && (
-          <div className="text-sm text-gray-500 dark:text-gray-400 mt-1 flex items-start gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-            </svg>
-            <span>{expense.notes}</span>
-          </div>
-        )}
-        {expense.receiptImage && (
-          <div className="mt-2">
-            <button 
-              onClick={() => window.open(expense.receiptImage, '_blank')}
-              className="flex items-center text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200"
-            >
-              <ImageIcon size={16} className="mr-1" />
-              <span>View Receipt</span>
-            </button>
-          </div>
-        )}
       </div>
       
-      <div className="col-span-2">
+      <div className="col-span-2 flex items-center">
         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getCategoryColor(expense.category)}`}>
           {expense.category}
         </span>
       </div>
       
-      <div className="col-span-2 text-gray-500 dark:text-gray-400">
+      <div className="col-span-2 flex items-center text-gray-500 dark:text-gray-400">
         {formatDate(expense.date)}
       </div>
       
-      <div className="col-span-2 text-right font-medium text-gray-900 dark:text-white">
+      <div className="col-span-2 flex items-center justify-end font-medium text-gray-900 dark:text-white">
         {formatCurrency(expense.amount)}
       </div>
       
       <div className="col-span-1 flex justify-end space-x-1">
         <button
           onClick={() => onEdit(expense)}
-          className="glass-button p-1.5 rounded-full hover:scale-110 transition-transform duration-200"
+          className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
           aria-label="Edit expense"
         >
           <Edit3 size={16} className="text-blue-600 dark:text-blue-400" />
         </button>
         <button
           onClick={() => onDelete(expense.id)}
-          className="glass-button p-1.5 rounded-full hover:scale-110 transition-transform duration-200"
+          className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
           aria-label="Delete expense"
         >
           <Trash2 size={16} className="text-red-600 dark:text-red-400" />

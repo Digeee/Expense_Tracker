@@ -90,21 +90,26 @@ const Header = ({ onAddExpense }: HeaderProps) => {
 
   return (
     <>
-      <header className="glass-card mx-4 mt-4 p-4 sticky top-4 z-10 shadow-enhanced">
+      <header className="bg-white dark:bg-gray-900 shadow-lg mx-4 mt-4 p-4 rounded-2xl sticky top-4 z-10">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center animate-pulse-slow shadow-md">
               <span className="text-white font-bold text-xl">$</span>
             </div>
-            <h1 className="text-2xl md:text-3xl font-heading font-bold text-gray-900 dark:text-white">
-              Expense Tracker
-            </h1>
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
+                Expense Tracker
+              </h1>
+              <p className="text-sm text-gray-500 dark:text-gray-400 hidden sm:block">
+                Manage your finances with ease
+              </p>
+            </div>
           </div>
           
           <div className="flex items-center space-x-3">
             <button
               onClick={downloadPDF}
-              className="glass-button p-2.5 rounded-xl hover:scale-110 transition-transform duration-200 shadow-sm"
+              className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               aria-label="Download PDF"
             >
               <Download className="text-gray-700 dark:text-gray-300" size={20} />
@@ -112,15 +117,23 @@ const Header = ({ onAddExpense }: HeaderProps) => {
             
             <button
               onClick={() => setIsProfileModalOpen(true)}
-              className="glass-button p-2.5 rounded-xl hover:scale-110 transition-transform duration-200 shadow-sm"
+              className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               aria-label="User Profile"
             >
-              <User className="text-gray-700 dark:text-gray-300" size={20} />
+              {userProfile.photo ? (
+                <img 
+                  src={userProfile.photo} 
+                  alt="Profile" 
+                  className="w-6 h-6 rounded-full object-cover"
+                />
+              ) : (
+                <User className="text-gray-700 dark:text-gray-300" size={20} />
+              )}
             </button>
             
             <button
               onClick={toggleDarkMode}
-              className="glass-button p-2.5 rounded-xl hover:scale-110 transition-transform duration-200 shadow-sm"
+              className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               {darkMode ? <Sun className="text-yellow-400" size={20} /> : <Moon className="text-gray-700" size={20} />}
@@ -131,7 +144,7 @@ const Header = ({ onAddExpense }: HeaderProps) => {
               className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium py-2.5 px-5 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg"
             >
               <Plus size={20} />
-              <span className="hidden sm:inline font-medium">Add Expense</span>
+              <span className="hidden sm:inline">Add Expense</span>
             </button>
           </div>
         </div>
