@@ -146,7 +146,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid rgba(255, 255, 255, 0.25);
   transition: all 0.3s ease;
   font-family: 'Inter', sans-serif;
-  @apply font-bold;
+  @apply font-extrabold;
 }
 
 .glass-button:hover {
@@ -216,6 +216,15 @@ h1, h2, h3, h4, h5, h6 {
 
 .animate-shake {
   animation: shake 0.5s ease-in-out;
+}
+
+/* Animation delays */
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
 }
 
 /* Custom scrollbar */
@@ -320,7 +329,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Enhanced input styles */
 .input-enhanced {
   font-family: 'Inter', sans-serif;
-  @apply px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-all duration-300 font-bold;
+  @apply px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-all duration-300 font-extrabold;
 }
 
 .input-enhanced:focus {
@@ -368,6 +377,7 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 0 50px rgba(59, 130, 246, 0.3);
   animation: float 6s ease-in-out infinite;
   transform-style: preserve-3d;
+  z-index: -1;
 }
 
 .floating-3d-element::before {

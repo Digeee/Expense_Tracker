@@ -41,19 +41,6 @@ const StatsCards = ({ totalExpenses, categoryTotals }: StatsCardsProps) => {
     return icons[category] || '📋'
   }
 
-  // Get category image URL
-  const getCategoryImage = (category: string) => {
-    const images: Record<string, string> = {
-      Food: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=200&fit=crop',
-      Transport: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&h=200&fit=crop',
-      Bills: 'https://images.unsplash.com/photo-1580519542036-0ebef2b4d55d?w=400&h=200&fit=crop',
-      Shopping: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400&h=200&fit=crop',
-      Leisure: 'https://images.unsplash.com/photo-1511527661596-7498f59c6a21?w=400&h=200&fit=crop',
-      Other: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&h=200&fit=crop'
-    }
-    return images[category] || images.Other
-  }
-
   return (
     <motion.div 
       className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
@@ -63,29 +50,28 @@ const StatsCards = ({ totalExpenses, categoryTotals }: StatsCardsProps) => {
     >
       {/* Total Expenses Card */}
       <motion.div 
-        className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden"
+        className="neumorphic p-6 relative overflow-hidden shadow-3d transform-3d-lift"
         variants={item}
         whileHover={{ y: -5, transition: { duration: 0.2 } }}
       >
-        <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-white/10"></div>
-        <div className="absolute -bottom-10 -left-10 w-24 h-24 rounded-full bg-white/5"></div>
+        <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 opacity-20 animate-rotate-3d"></div>
+        <div className="absolute top-0 right-0 w-8 h-8 rounded-full bg-white/30 dark:bg-white/10"></div>
+        <div className="absolute bottom-4 left-4 w-6 h-6 rounded-full bg-white/20 dark:bg-white/5"></div>
         
-        <div className="relative z-10">
-          <h3 className="text-lg font-medium flex items-center gap-2">
-            <span className="text-2xl">💰</span>
-            Total Expenses
-          </h3>
-          <p className="text-3xl font-bold mt-2">
-            {formatCurrency(totalExpenses)}
-          </p>
-          <div className="mt-4 h-2 w-full bg-white/30 rounded-full overflow-hidden">
-            <motion.div 
-              className="h-full bg-white rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 1, delay: 0.5 }}
-            ></motion.div>
-          </div>
+        <h3 className="text-xl font-display font-extrabold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+          <span className="text-2xl">💰</span>
+          Total Expenses
+        </h3>
+        <p className="text-4xl font-display font-extrabold text-gray-900 dark:text-white mt-2">
+          {formatCurrency(totalExpenses)}
+        </p>
+        <div className="mt-4 h-2 w-full neumorphic-inset overflow-hidden rounded-full">
+          <motion.div 
+            className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: "100%" }}
+            transition={{ duration: 1, delay: 0.5 }}
+          ></motion.div>
         </div>
       </motion.div>
 
@@ -93,44 +79,33 @@ const StatsCards = ({ totalExpenses, categoryTotals }: StatsCardsProps) => {
       {topCategories.map(([category, amount], index) => (
         <motion.div 
           key={category}
-          className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-700 relative overflow-hidden"
+          className="neumorphic p-6 relative overflow-hidden shadow-3d transform-3d-lift"
           variants={item}
           whileHover={{ y: -5, transition: { duration: 0.2 } }}
         >
-          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
+          <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-gradient-to-r from-indigo-400 to-purple-500 opacity-20 animate-rotate-3d"></div>
+          <div className="absolute top-0 right-0 w-8 h-8 rounded-full bg-white/30 dark:bg-white/10"></div>
+          <div className="absolute bottom-4 left-4 w-6 h-6 rounded-full bg-white/20 dark:bg-white/5"></div>
           
-          <div className="relative z-10">
-            <div className="flex justify-between items-start">
-              <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                <span className="text-2xl">{getCategoryIcon(category)}</span>
-                {category}
-              </h3>
-              <div className="w-16 h-16 rounded-lg overflow-hidden">
-                <img 
-                  src={getCategoryImage(category)} 
-                  alt={category} 
-                  className="w-full h-full object-cover"
-                />
-              </div>
+          <h3 className="text-xl font-display font-extrabold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+            <span className="text-2xl">{getCategoryIcon(category)}</span>
+            {category}
+          </h3>
+          <p className="text-3xl font-display font-extrabold text-gray-900 dark:text-white mt-2">
+            {formatCurrency(amount)}
+          </p>
+          <div className="mt-4 flex items-center">
+            <div className="h-2 flex-1 neumorphic-inset overflow-hidden rounded-full">
+              <motion.div 
+                className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${Math.min(100, (amount / totalExpenses) * 100)}%` }}
+                transition={{ duration: 1, delay: 0.5 + index * 0.1 }}
+              ></motion.div>
             </div>
-            
-            <p className="text-2xl font-bold text-gray-900 dark:text-white mt-2">
-              {formatCurrency(amount)}
-            </p>
-            
-            <div className="mt-4 flex items-center">
-              <div className="h-2 flex-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                <motion.div 
-                  className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${Math.min(100, (amount / totalExpenses) * 100)}%` }}
-                  transition={{ duration: 1, delay: 0.5 + index * 0.1 }}
-                ></motion.div>
-              </div>
-              <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">
-                {totalExpenses > 0 ? `${Math.round((amount / totalExpenses) * 100)}%` : '0%'}
-              </span>
-            </div>
+            <span className="text-sm text-gray-500 dark:text-gray-400 ml-2 font-extrabold">
+              {totalExpenses > 0 ? `${Math.round((amount / totalExpenses) * 100)}%` : '0%'}
+            </span>
           </div>
         </motion.div>
       ))}
@@ -140,17 +115,17 @@ const StatsCards = ({ totalExpenses, categoryTotals }: StatsCardsProps) => {
         Array.from({ length: 3 - topCategories.length }).map((_, index) => (
           <motion.div 
             key={`empty-${index}`}
-            className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-700 opacity-70"
+            className="neumorphic p-6 opacity-70 shadow-3d transform-3d-lift"
             variants={item}
           >
-            <h3 className="text-lg font-medium text-gray-500 dark:text-gray-400 flex items-center gap-2">
+            <h3 className="text-xl font-display font-extrabold text-gray-500 dark:text-gray-400 flex items-center gap-2">
               <span className="text-2xl">📦</span>
               No Data
             </h3>
-            <p className="text-2xl font-bold text-gray-500 dark:text-gray-400 mt-2">
+            <p className="text-3xl font-display font-extrabold text-gray-500 dark:text-gray-400 mt-2">
               {formatCurrency(0)}
             </p>
-            <div className="mt-4 h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+            <div className="mt-4 h-2 w-full neumorphic-inset rounded-full"></div>
           </motion.div>
         ))
       }

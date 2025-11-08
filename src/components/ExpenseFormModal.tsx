@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, AlertCircle, Upload, Image as ImageIcon, Trash2 } from 'lucide-react'
+import { X, AlertCircle } from 'lucide-react'
 import { Expense } from '../types'
 import { useExpenses } from '../hooks/useExpenses'
 import { useUserProfile } from '../hooks/useUserProfile'
@@ -22,7 +22,6 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
   const [category, setCategory] = useState(categories[0] || 'Other')
   const [date, setDate] = useState(formatInputDate(new Date().toISOString()))
   const [notes, setNotes] = useState('')
-  const [receiptImage, setReceiptImage] = useState<string | null>(null)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [shake, setShake] = useState(false)
 
@@ -48,14 +47,12 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
       setCategory(expense.category)
       setDate(formatInputDate(expense.date))
       setNotes(expense.notes || '')
-      setReceiptImage(expense.receiptImage || null)
     } else {
       setTitle('')
       setAmount('')
       setCategory(categories[0] || 'Other')
       setDate(formatInputDate(new Date().toISOString()))
       setNotes('')
-      setReceiptImage(null)
     }
     setErrors({})
   }, [expense, isOpen, categories])
@@ -104,8 +101,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
         amount: parseFloat(amount),
         category,
         date,
-        notes,
-        receiptImage: receiptImage || undefined
+        notes
       })
     }
   }
@@ -123,25 +119,6 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
     }
   }
 
-  const handleReceiptImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0]
-      const reader = new FileReader()
-      
-      reader.onload = (event) => {
-        if (event.target?.result) {
-          setReceiptImage(event.target.result as string)
-        }
-      }
-      
-      reader.readAsDataURL(file)
-    }
-  }
-
-  const removeReceiptImage = () => {
-    setReceiptImage(null)
-  }
-
   return (
     <AnimatePresence>
       {isOpen && (
@@ -152,22 +129,22 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="bg-white dark:bg-gray-800 w-full max-w-md max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl"
+            className="neumorphic w-full max-w-md max-h-[90vh] overflow-y-auto shadow-3d transform-3d-hover"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
           >
-            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <div className="px-6 py-4 border-b border-professional flex justify-between items-center">
+              <h2 className="text-3xl font-display font-extrabold text-gray-900 dark:text-white">
                 {expense ? 'Edit Expense' : 'Add New Expense'}
               </h2>
               <button
                 onClick={onClose}
-                className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                className="neumorphic-btn p-2 rounded-full transform-3d-hover"
                 aria-label="Close"
               >
-                <X size={24} className="text-gray-700 dark:text-gray-300" />
+                <X className="text-gray-700 dark:text-gray-300" size={24} />
               </button>
             </div>
             
@@ -175,7 +152,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
               <div className="space-y-4">
                 {/* Title */}
                 <div>
-                  <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label htmlFor="title" className="block text-sm font-extrabold text-gray-700 dark:text-gray-300 mb-1">
                     Title *
                   </label>
                   <div className="relative">
@@ -184,14 +161,12 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                       type="text"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
-                      className={`w-full px-4 py-3 rounded-lg border ${
-                        errors.title ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
-                      } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                      className={`w-full input-enhanced rounded-xl font-extrabold ${errors.title ? 'border-red-500 focus:ring-red-500' : ''}`}
                       placeholder="Dinner, Gas, etc."
                     />
                   </div>
                   {errors.title && (
-                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400">
+                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400 font-extrabold">
                       <AlertCircle size={16} className="mr-1" />
                       {errors.title}
                     </div>
@@ -200,11 +175,11 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 
                 {/* Amount */}
                 <div>
-                  <label htmlFor="amount" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label htmlFor="amount" className="block text-sm font-extrabold text-gray-700 dark:text-gray-300 mb-1">
                     Amount *
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 font-extrabold">
                       {getCurrencySymbol()}
                     </span>
                     <input
@@ -214,14 +189,12 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                       onChange={(e) => setAmount(e.target.value)}
                       min="0.01"
                       step="0.01"
-                      className={`w-full pl-8 pr-4 py-3 rounded-lg border ${
-                        errors.amount ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
-                      } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                      className={`w-full pl-8 pr-4 py-3 input-enhanced rounded-xl font-extrabold ${errors.amount ? 'border-red-500 focus:ring-red-500' : ''}`}
                       placeholder="0.00"
                     />
                   </div>
                   {errors.amount && (
-                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400">
+                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400 font-extrabold">
                       <AlertCircle size={16} className="mr-1" />
                       {errors.amount}
                     </div>
@@ -230,26 +203,24 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 
                 {/* Category */}
                 <div>
-                  <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label htmlFor="category" className="block text-sm font-extrabold text-gray-700 dark:text-gray-300 mb-1">
                     Category *
                   </label>
                   <select
                     id="category"
                     value={category}
                     onChange={handleCategoryChange}
-                    className={`w-full px-4 py-3 rounded-lg border ${
-                      errors.category ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
-                    } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                    className={`w-full input-enhanced rounded-xl font-extrabold ${errors.category ? 'border-red-500 focus:ring-red-500' : ''}`}
                   >
                     {categories.map((cat) => (
-                      <option key={cat} value={cat} className="bg-white dark:bg-gray-800">
+                      <option key={cat} value={cat} className="font-extrabold">
                         {cat}
                       </option>
                     ))}
-                    <option value="custom" className="bg-white dark:bg-gray-800">+ Add Custom Category</option>
+                    <option value="custom" className="font-extrabold">+ Add Custom Category</option>
                   </select>
                   {errors.category && (
-                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400">
+                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400 font-extrabold">
                       <AlertCircle size={16} className="mr-1" />
                       {errors.category}
                     </div>
@@ -258,7 +229,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 
                 {/* Date */}
                 <div>
-                  <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label htmlFor="date" className="block text-sm font-extrabold text-gray-700 dark:text-gray-300 mb-1">
                     Date *
                   </label>
                   <input
@@ -266,12 +237,10 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className={`w-full px-4 py-3 rounded-lg border ${
-                      errors.date ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
-                    } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                    className={`w-full input-enhanced rounded-xl font-extrabold ${errors.date ? 'border-red-500 focus:ring-red-500' : ''}`}
                   />
                   {errors.date && (
-                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400">
+                    <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400 font-extrabold">
                       <AlertCircle size={16} className="mr-1" />
                       {errors.date}
                     </div>
@@ -280,7 +249,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 
                 {/* Notes */}
                 <div>
-                  <label htmlFor="notes" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  <label htmlFor="notes" className="block text-sm font-extrabold text-gray-700 dark:text-gray-300 mb-1">
                     Notes
                   </label>
                   <textarea
@@ -288,54 +257,9 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     rows={3}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    className="w-full input-enhanced rounded-xl font-bold"
                     placeholder="Additional details (optional)"
                   />
-                </div>
-                
-                {/* Receipt Image Upload */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Receipt Image
-                  </label>
-                  
-                  {receiptImage ? (
-                    <div className="relative">
-                      <img 
-                        src={receiptImage} 
-                        alt="Receipt preview" 
-                        className="w-full h-48 object-contain rounded-lg border border-gray-300 dark:border-gray-600"
-                      />
-                      <button
-                        type="button"
-                        onClick={removeReceiptImage}
-                        className="absolute top-2 right-2 p-1.5 rounded-full bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 shadow-md"
-                        aria-label="Remove image"
-                      >
-                        <Trash2 size={16} className="text-red-600 dark:text-red-400" />
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-center w-full">
-                      <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200">
-                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                          <Upload className="w-8 h-8 mb-2 text-gray-500 dark:text-gray-400" />
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
-                            <span className="font-semibold">Click to upload</span> or drag and drop
-                          </p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">
-                            PNG, JPG, GIF up to 5MB
-                          </p>
-                        </div>
-                        <input 
-                          type="file" 
-                          className="hidden" 
-                          accept="image/*" 
-                          onChange={handleReceiptImageChange}
-                        />
-                      </label>
-                    </div>
-                  )}
                 </div>
               </div>
               
@@ -343,13 +267,13 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2 font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+                  className="neumorphic-btn font-extrabold text-gray-700 dark:text-gray-300 rounded-xl transform-3d-hover"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg"
+                  className="neumorphic-btn text-gray-900 dark:text-white font-extrabold rounded-xl transform-3d-hover transition-all duration-300"
                 >
                   {expense ? 'Update Expense' : 'Add Expense'}
                 </button>
