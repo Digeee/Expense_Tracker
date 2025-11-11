@@ -1,4 +1,4 @@
-import { Plus, Sun, Moon, Download, User, MessageCircle } from 'lucide-react'
+import { Plus, Sun, Moon, Download, User } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useUserProfile } from '../hooks/useUserProfile'
 import { useExpenses } from '../hooks/useExpenses'
@@ -8,9 +8,11 @@ import UserProfileModal from './UserProfileModal'
 
 interface HeaderProps {
   onAddExpense: () => void
+  onOpenProfile?: () => void
+  userProfilePhoto?: string
 }
 
-const Header = ({ onAddExpense }: HeaderProps) => {
+const Header = ({ onAddExpense, onOpenProfile, userProfilePhoto }: HeaderProps) => {
   const [darkMode, setDarkMode] = useState(false)
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
   const { userProfile, updateUserProfile } = useUserProfile()
@@ -88,24 +90,19 @@ const Header = ({ onAddExpense }: HeaderProps) => {
     doc.save(`expense-report-${currentDate}.pdf`)
   }
 
-  // Dispatch event to open chatbot
-  const openChatbot = () => {
-    window.dispatchEvent(new CustomEvent('openChatbot'))
-  }
-
   return (
     <>
-      <header className="neumorphic mx-4 mt-4 p-4 sticky top-4 z-10 transform-3d">
+      <header className="bg-white dark:bg-gray-900 shadow-lg mx-4 mt-4 p-4 rounded-2xl sticky top-4 z-10">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 rounded-xl neumorphic-btn flex items-center justify-center animate-pulse-slow transform-3d-hover">
-              <span className="text-gray-800 dark:text-white font-extrabold text-xl">$</span>
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center animate-pulse-slow shadow-md">
+              <span className="text-white font-bold text-xl">$</span>
             </div>
             <div>
-              <h1 className="text-3xl font-display font-extrabold text-gray-900 dark:text-white transform-3d-hover">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
                 Expense Tracker
               </h1>
-              <p className="text-sm text-gray-500 dark:text-gray-400 hidden sm:block font-bold">
+              <p className="text-sm text-gray-500 dark:text-gray-400 hidden sm:block">
                 Manage your finances with ease
               </p>
             </div>
@@ -114,30 +111,22 @@ const Header = ({ onAddExpense }: HeaderProps) => {
           <div className="flex items-center space-x-3">
             <button
               onClick={downloadPDF}
-              className="neumorphic-btn p-2.5 rounded-xl transform-3d-hover"
+              className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               aria-label="Download PDF"
             >
               <Download className="text-gray-700 dark:text-gray-300" size={20} />
             </button>
             
             <button
-              onClick={openChatbot}
-              className="neumorphic-btn p-2.5 rounded-xl transform-3d-hover"
-              aria-label="Chat Assistant"
-            >
-              <MessageCircle className="text-gray-700 dark:text-gray-300" size={20} />
-            </button>
-            
-            <button
-              onClick={() => setIsProfileModalOpen(true)}
-              className="neumorphic-btn p-2.5 rounded-xl transform-3d-hover"
+              onClick={onOpenProfile || (() => setIsProfileModalOpen(true))}
+              className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               aria-label="User Profile"
             >
-              {userProfile.photo ? (
+              {userProfilePhoto || userProfile.photo ? (
                 <img 
-                  src={userProfile.photo} 
+                  src={userProfilePhoto || userProfile.photo} 
                   alt="Profile" 
-                  className="w-6 h-6 rounded-full object-cover transform-3d-hover"
+                  className="w-6 h-6 rounded-full object-cover"
                 />
               ) : (
                 <User className="text-gray-700 dark:text-gray-300" size={20} />
@@ -146,7 +135,7 @@ const Header = ({ onAddExpense }: HeaderProps) => {
             
             <button
               onClick={toggleDarkMode}
-              className="neumorphic-btn p-2.5 rounded-xl transform-3d-hover"
+              className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               {darkMode ? <Sun className="text-yellow-400" size={20} /> : <Moon className="text-gray-700" size={20} />}
@@ -154,12 +143,10 @@ const Header = ({ onAddExpense }: HeaderProps) => {
             
             <button
               onClick={onAddExpense}
-              className="neumorphic-btn text-gray-900 dark:text-white font-extrabold py-2.5 px-5 rounded-xl transform-3d-hover transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium py-2.5 px-5 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg"
             >
-              <div className="flex items-center gap-2">
-                <Plus size={20} />
-                <span className="hidden sm:inline font-extrabold">Add Expense</span>
-              </div>
+              <Plus size={20} />
+              <span className="hidden sm:inline">Add Expense</span>
             </button>
           </div>
         </div>
