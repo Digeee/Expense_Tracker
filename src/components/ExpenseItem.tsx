@@ -52,72 +52,140 @@ const ExpenseItem = ({ expense, onEdit, onDelete }: ExpenseItemProps) => {
 
   return (
     <motion.div 
-      className="grid grid-cols-12 gap-4 px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-800/20 transition-colors duration-200"
+      className="px-4 py-3 md:px-6 md:py-4 hover:bg-gray-50 dark:hover:bg-gray-800/20 transition-colors duration-200"
       whileHover={{ x: 5 }}
       transition={{ type: "spring", stiffness: 300 }}
     >
-      <div className="col-span-5">
-        <div className="flex items-start gap-3">
-          <img 
-            src={getCategoryImage(expense.category)} 
-            alt={expense.category} 
-            className="w-12 h-12 rounded-lg object-cover border border-gray-200 dark:border-gray-700"
-          />
-          <div>
-            <div className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
-              <span className="text-lg">{getCategoryIcon(expense.category)}</span>
-              <span>{expense.title}</span>
+      {/* Mobile view */}
+      <div className="md:hidden">
+        <div className="flex justify-between items-start">
+          <div className="flex items-start gap-3">
+            <img 
+              src={getCategoryImage(expense.category)} 
+              alt={expense.category} 
+              className="w-10 h-10 rounded-lg object-cover border border-gray-200 dark:border-gray-700"
+            />
+            <div>
+              <div className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                <span className="text-lg">{getCategoryIcon(expense.category)}</span>
+                <span className="text-sm">{expense.title}</span>
+              </div>
+              <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                {formatDate(expense.date)}
+              </div>
             </div>
-            {expense.notes && (
-              <div className="text-sm text-gray-500 dark:text-gray-400 mt-1 flex items-start gap-2">
-                <FileText size={14} className="mt-0.5 flex-shrink-0" />
-                <span>{expense.notes}</span>
-              </div>
-            )}
-            {expense.receiptImage && (
-              <div className="mt-2">
-                <button 
-                  onClick={() => window.open(expense.receiptImage, '_blank')}
-                  className="flex items-center text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200"
-                >
-                  <ImageIcon size={16} className="mr-1" />
-                  <span>View Receipt</span>
-                </button>
-              </div>
-            )}
           </div>
+          <div className="text-right">
+            <div className="font-medium text-gray-900 dark:text-white text-sm">
+              {formatCurrency(expense.amount)}
+            </div>
+            <div className="flex justify-end space-x-1 mt-2">
+              <button
+                onClick={() => onEdit(expense)}
+                className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+                aria-label="Edit expense"
+              >
+                <Edit3 size={14} className="text-blue-600 dark:text-blue-400" />
+              </button>
+              <button
+                onClick={() => onDelete(expense.id)}
+                className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+                aria-label="Delete expense"
+              >
+                <Trash2 size={14} className="text-red-600 dark:text-red-400" />
+              </button>
+            </div>
+          </div>
+        </div>
+        {expense.notes && (
+          <div className="text-xs text-gray-500 dark:text-gray-400 mt-2 flex items-start gap-2">
+            <FileText size={12} className="mt-0.5 flex-shrink-0" />
+            <span>{expense.notes}</span>
+          </div>
+        )}
+        {expense.receiptImage && (
+          <div className="mt-2">
+            <button 
+              onClick={() => window.open(expense.receiptImage, '_blank')}
+              className="flex items-center text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200"
+            >
+              <ImageIcon size={12} className="mr-1" />
+              <span>View Receipt</span>
+            </button>
+          </div>
+        )}
+        <div className="mt-2">
+          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getCategoryColor(expense.category)}`}>
+            {expense.category}
+          </span>
         </div>
       </div>
       
-      <div className="col-span-2 flex items-center">
-        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getCategoryColor(expense.category)}`}>
-          {expense.category}
-        </span>
-      </div>
-      
-      <div className="col-span-2 flex items-center text-gray-500 dark:text-gray-400">
-        {formatDate(expense.date)}
-      </div>
-      
-      <div className="col-span-2 flex items-center justify-end font-medium text-gray-900 dark:text-white">
-        {formatCurrency(expense.amount)}
-      </div>
-      
-      <div className="col-span-1 flex justify-end space-x-1">
-        <button
-          onClick={() => onEdit(expense)}
-          className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-          aria-label="Edit expense"
-        >
-          <Edit3 size={16} className="text-blue-600 dark:text-blue-400" />
-        </button>
-        <button
-          onClick={() => onDelete(expense.id)}
-          className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-          aria-label="Delete expense"
-        >
-          <Trash2 size={16} className="text-red-600 dark:text-red-400" />
-        </button>
+      {/* Desktop view */}
+      <div className="hidden md:grid grid-cols-12 gap-4">
+        <div className="col-span-5">
+          <div className="flex items-start gap-3">
+            <img 
+              src={getCategoryImage(expense.category)} 
+              alt={expense.category} 
+              className="w-12 h-12 rounded-lg object-cover border border-gray-200 dark:border-gray-700"
+            />
+            <div>
+              <div className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                <span className="text-lg">{getCategoryIcon(expense.category)}</span>
+                <span>{expense.title}</span>
+              </div>
+              {expense.notes && (
+                <div className="text-sm text-gray-500 dark:text-gray-400 mt-1 flex items-start gap-2">
+                  <FileText size={14} className="mt-0.5 flex-shrink-0" />
+                  <span>{expense.notes}</span>
+                </div>
+              )}
+              {expense.receiptImage && (
+                <div className="mt-2">
+                  <button 
+                    onClick={() => window.open(expense.receiptImage, '_blank')}
+                    className="flex items-center text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200"
+                  >
+                    <ImageIcon size={16} className="mr-1" />
+                    <span>View Receipt</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        
+        <div className="col-span-2 flex items-center">
+          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getCategoryColor(expense.category)}`}>
+            {expense.category}
+          </span>
+        </div>
+        
+        <div className="col-span-2 flex items-center text-gray-500 dark:text-gray-400">
+          {formatDate(expense.date)}
+        </div>
+        
+        <div className="col-span-2 flex items-center justify-end font-medium text-gray-900 dark:text-white">
+          {formatCurrency(expense.amount)}
+        </div>
+        
+        <div className="col-span-1 flex justify-end space-x-1">
+          <button
+            onClick={() => onEdit(expense)}
+            className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+            aria-label="Edit expense"
+          >
+            <Edit3 size={16} className="text-blue-600 dark:text-blue-400" />
+          </button>
+          <button
+            onClick={() => onDelete(expense.id)}
+            className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+            aria-label="Delete expense"
+          >
+            <Trash2 size={16} className="text-red-600 dark:text-red-400" />
+          </button>
+        </div>
       </div>
     </motion.div>
   )

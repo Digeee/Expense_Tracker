@@ -95,23 +95,23 @@ const Header = ({ onAddExpense, onOpenProfile, userProfilePhoto }: HeaderProps) 
       <header className="bg-white dark:bg-gray-900 shadow-lg mx-4 mt-4 p-4 rounded-2xl sticky top-4 z-10">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center animate-pulse-slow shadow-md">
-              <span className="text-white font-bold text-xl">$</span>
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center animate-pulse-slow shadow-md">
+              <span className="text-white font-bold text-lg md:text-xl">$</span>
             </div>
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
                 Expense Tracker
               </h1>
-              <p className="text-sm text-gray-500 dark:text-gray-400 hidden sm:block">
+              <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400 hidden md:block">
                 Manage your finances with ease
               </p>
             </div>
           </div>
           
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 md:space-x-3">
             <button
               onClick={downloadPDF}
-              className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+              className="p-2 md:p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               aria-label="Download PDF"
             >
               <Download className="text-gray-700 dark:text-gray-300" size={20} />
@@ -119,7 +119,7 @@ const Header = ({ onAddExpense, onOpenProfile, userProfilePhoto }: HeaderProps) 
             
             <button
               onClick={onOpenProfile || (() => setIsProfileModalOpen(true))}
-              className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+              className="p-2 md:p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               aria-label="User Profile"
             >
               {userProfilePhoto || userProfile.photo ? (
@@ -135,7 +135,7 @@ const Header = ({ onAddExpense, onOpenProfile, userProfilePhoto }: HeaderProps) 
             
             <button
               onClick={toggleDarkMode}
-              className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+              className="p-2 md:p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               {darkMode ? <Sun className="text-yellow-400" size={20} /> : <Moon className="text-gray-700" size={20} />}
@@ -143,10 +143,10 @@ const Header = ({ onAddExpense, onOpenProfile, userProfilePhoto }: HeaderProps) 
             
             <button
               onClick={onAddExpense}
-              className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium py-2.5 px-5 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg"
+              className="flex items-center gap-1 md:gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium py-2 px-3 md:py-2.5 md:px-5 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg"
             >
-              <Plus size={20} />
-              <span className="hidden sm:inline">Add Expense</span>
+              <Plus size={16} className="md:size-20" />
+              <span className="hidden sm:inline text-sm md:text-base">Add Expense</span>
             </button>
           </div>
         </div>

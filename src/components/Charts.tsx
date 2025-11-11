@@ -79,14 +79,14 @@ const Charts = ({ expenses }: ChartsProps) => {
   }
 
   return (
-    <div className="space-y-8">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-          <span className="text-xl">📊</span>
+    <div className="space-y-6 md:space-y-8">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 md:p-6 shadow-xl">
+        <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-3 md:mb-4 flex items-center gap-2">
+          <span className="text-lg md:text-xl">📊</span>
           Category Breakdown
         </h3>
         {categoryData.length > 0 ? (
-          <div className="h-80">
+          <div className="h-64 md:h-80">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -94,7 +94,7 @@ const Charts = ({ expenses }: ChartsProps) => {
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  outerRadius={80}
+                  outerRadius={60}
                   fill="#8884d8"
                   dataKey="value"
                   label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
@@ -105,51 +105,51 @@ const Charts = ({ expenses }: ChartsProps) => {
                 </Pie>
                 <Tooltip content={<CustomTooltip />} />
                 <Legend 
-                  formatter={(value) => <span className="text-gray-700 dark:text-gray-300">{value}</span>}
+                  formatter={(value) => <span className="text-gray-700 dark:text-gray-300 text-xs md:text-sm">{value}</span>}
                 />
               </PieChart>
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="h-80 flex items-center justify-center text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 rounded-xl">
+          <div className="h-64 md:h-80 flex items-center justify-center text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 rounded-xl">
             No data available
           </div>
         )}
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-          <span className="text-xl">📈</span>
+      <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 md:p-6 shadow-xl">
+        <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-3 md:mb-4 flex items-center gap-2">
+          <span className="text-lg md:text-xl">📈</span>
           Monthly Trend
         </h3>
         {monthlyData.length > 0 ? (
-          <div className="h-80">
+          <div className="h-64 md:h-80">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
                 data={monthlyData}
-                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                margin={{ top: 5, right: 10, left: 0, bottom: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(59, 130, 246, 0.2)" />
                 <XAxis 
                   dataKey="month" 
                   stroke="#3b82f6" 
-                  tick={{ fill: '#3b82f6', fontFamily: 'Inter, sans-serif' }}
+                  tick={{ fill: '#3b82f6', fontFamily: 'Inter, sans-serif', fontSize: 12 }}
                 />
                 <YAxis 
                   tickFormatter={(value) => formatYAxis(value)} 
                   domain={[0, 'dataMax + 100']}
                   stroke="#3b82f6"
-                  tick={{ fill: '#3b82f6', fontFamily: 'Inter, sans-serif' }}
+                  tick={{ fill: '#3b82f6', fontFamily: 'Inter, sans-serif', fontSize: 12 }}
                 />
                 <Tooltip content={<CustomLineTooltip />} />
                 <Legend 
-                  formatter={(value) => <span className="text-gray-700 dark:text-gray-300">{value}</span>}
+                  formatter={(value) => <span className="text-gray-700 dark:text-gray-300 text-xs md:text-sm">{value}</span>}
                 />
                 <Line 
                   type="monotone" 
                   dataKey="amount" 
                   stroke="#3b82f6" 
-                  activeDot={{ r: 8 }} 
+                  activeDot={{ r: 6 }} 
                   strokeWidth={2}
                   name="Total Expenses"
                 />
@@ -157,7 +157,7 @@ const Charts = ({ expenses }: ChartsProps) => {
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="h-80 flex items-center justify-center text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 rounded-xl">
+          <div className="h-64 md:h-80 flex items-center justify-center text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 rounded-xl">
             No data available
           </div>
         )}
