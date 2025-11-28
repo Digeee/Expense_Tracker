@@ -52,7 +52,7 @@ const ExpenseItem = ({ expense, onEdit, onDelete }: ExpenseItemProps) => {
 
   return (
     <motion.div 
-      className="px-4 py-3 md:px-6 md:py-4 hover:bg-gray-50 dark:hover:bg-gray-800/20 transition-colors duration-200"
+      className="px-4 py-3 md:px-6 md:py-4 hover:bg-gray-50 dark:hover:bg-gray-800/20 transition-colors duration-200 smooth-transition"
       whileHover={{ x: 5 }}
       transition={{ type: "spring", stiffness: 300 }}
     >
@@ -82,14 +82,14 @@ const ExpenseItem = ({ expense, onEdit, onDelete }: ExpenseItemProps) => {
             <div className="flex justify-end space-x-1 mt-2">
               <button
                 onClick={() => onEdit(expense)}
-                className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+                className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 smooth-transition glow"
                 aria-label="Edit expense"
               >
                 <Edit3 size={14} className="text-blue-600 dark:text-blue-400" />
               </button>
               <button
                 onClick={() => onDelete(expense.id)}
-                className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+                className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 smooth-transition glow"
                 aria-label="Delete expense"
               >
                 <Trash2 size={14} className="text-red-600 dark:text-red-400" />
@@ -107,7 +107,7 @@ const ExpenseItem = ({ expense, onEdit, onDelete }: ExpenseItemProps) => {
           <div className="mt-2">
             <button 
               onClick={() => window.open(expense.receiptImage, '_blank')}
-              className="flex items-center text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200"
+              className="flex items-center text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200 smooth-transition glow"
             >
               <ImageIcon size={12} className="mr-1" />
               <span>View Receipt</span>
@@ -145,7 +145,7 @@ const ExpenseItem = ({ expense, onEdit, onDelete }: ExpenseItemProps) => {
                 <div className="mt-2">
                   <button 
                     onClick={() => window.open(expense.receiptImage, '_blank')}
-                    className="flex items-center text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200"
+                    className="flex items-center text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200 smooth-transition glow"
                   >
                     <ImageIcon size={16} className="mr-1" />
                     <span>View Receipt</span>
@@ -173,14 +173,14 @@ const ExpenseItem = ({ expense, onEdit, onDelete }: ExpenseItemProps) => {
         <div className="col-span-1 flex justify-end space-x-1">
           <button
             onClick={() => onEdit(expense)}
-            className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+            className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 smooth-transition glow"
             aria-label="Edit expense"
           >
             <Edit3 size={16} className="text-blue-600 dark:text-blue-400" />
           </button>
           <button
             onClick={() => onDelete(expense.id)}
-            className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+            className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 smooth-transition glow"
             aria-label="Delete expense"
           >
             <Trash2 size={16} className="text-red-600 dark:text-red-400" />
