@@ -8,7 +8,7 @@ interface WelcomeBannerProps {
 const WelcomeBanner = ({ onClose }: WelcomeBannerProps) => {
   return (
     <motion.div
-      className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl p-4 md:p-6 mb-6 md:mb-8 text-white relative overflow-hidden shadow-xl"
+      className="enhanced-card p-4 md:p-6 mb-6 md:mb-8 text-white relative overflow-hidden shadow-xl animated-bg"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -27,38 +27,38 @@ const WelcomeBanner = ({ onClose }: WelcomeBannerProps) => {
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
               <div className="flex items-start p-3 md:p-4 bg-white/10 rounded-xl backdrop-blur-sm">
-                <div className="mr-2 md:mr-3 mt-1">
-                  <Plus className="text-white" size={16} />
+                <div className="mr-3 mt-1">
+                  <Plus className="text-white" size={20} />
                 </div>
                 <div>
                   <h3 className="font-semibold text-sm md:text-base">Add Expenses</h3>
-                  <p className="text-xs md:text-sm text-blue-100 mt-1">Click the "Add Expense" button to record new expenses</p>
+                  <p className="text-xs md:text-sm text-blue-100 mt-1">Quickly add your daily expenses with categories</p>
                 </div>
               </div>
               
               <div className="flex items-start p-3 md:p-4 bg-white/10 rounded-xl backdrop-blur-sm">
-                <div className="mr-2 md:mr-3 mt-1">
-                  <Edit3 className="text-white" size={16} />
+                <div className="mr-3 mt-1">
+                  <Edit3 className="text-white" size={20} />
                 </div>
                 <div>
                   <h3 className="font-semibold text-sm md:text-base">Edit & Delete</h3>
-                  <p className="text-xs md:text-sm text-blue-100 mt-1">Use the action buttons to modify or remove expenses</p>
+                  <p className="text-xs md:text-sm text-blue-100 mt-1">Modify or remove expenses as needed</p>
                 </div>
               </div>
               
               <div className="flex items-start p-3 md:p-4 bg-white/10 rounded-xl backdrop-blur-sm">
-                <div className="mr-2 md:mr-3 mt-1">
-                  <Filter className="text-white" size={16} />
+                <div className="mr-3 mt-1">
+                  <Filter className="text-white" size={20} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm md:text-base">Filter & Analyze</h3>
-                  <p className="text-xs md:text-sm text-blue-100 mt-1">Use filters to view expenses by category or date range</p>
+                  <h3 className="font-semibold text-sm md:text-base">Filter & Search</h3>
+                  <p className="text-xs md:text-sm text-blue-100 mt-1">Find expenses by date range or category</p>
                 </div>
               </div>
               
               <div className="flex items-start p-3 md:p-4 bg-white/10 rounded-xl backdrop-blur-sm">
-                <div className="mr-2 md:mr-3 mt-1">
-                  <BarChart3 className="text-white" size={16} />
+                <div className="mr-3 mt-1">
+                  <BarChart3 className="text-white" size={20} />
                 </div>
                 <div>
                   <h3 className="font-semibold text-sm md:text-base">Visualize Data</h3>
