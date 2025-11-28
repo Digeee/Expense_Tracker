@@ -152,7 +152,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="bg-white dark:bg-gray-800 w-full max-w-md max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl"
+            className="enhanced-card w-full max-w-md max-h-[90vh] overflow-y-auto shadow-2xl"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
@@ -186,7 +186,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                       onChange={(e) => setTitle(e.target.value)}
                       className={`w-full px-4 py-3 rounded-lg border ${
                         errors.title ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
-                      } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                      } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white input-enhanced`}
                       placeholder="Dinner, Gas, etc."
                     />
                   </div>
@@ -216,7 +216,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                       step="0.01"
                       className={`w-full pl-8 pr-4 py-3 rounded-lg border ${
                         errors.amount ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
-                      } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                      } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white input-enhanced`}
                       placeholder="0.00"
                     />
                   </div>
@@ -239,7 +239,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                     onChange={handleCategoryChange}
                     className={`w-full px-4 py-3 rounded-lg border ${
                       errors.category ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
-                    } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                    } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white input-enhanced`}
                   >
                     {categories.map((cat) => (
                       <option key={cat} value={cat} className="bg-white dark:bg-gray-800">
@@ -268,7 +268,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                     onChange={(e) => setDate(e.target.value)}
                     className={`w-full px-4 py-3 rounded-lg border ${
                       errors.date ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
-                    } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
+                    } focus:outline-none focus:ring-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white input-enhanced`}
                   />
                   {errors.date && (
                     <div className="flex items-center mt-1 text-sm text-red-600 dark:text-red-400">
@@ -288,7 +288,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     rows={3}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white input-enhanced"
                     placeholder="Additional details (optional)"
                   />
                 </div>
@@ -317,7 +317,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                     </div>
                   ) : (
                     <div className="flex items-center justify-center w-full">
-                      <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200">
+                      <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 input-enhanced">
                         <div className="flex flex-col items-center justify-center pt-5 pb-6">
                           <Upload className="w-8 h-8 mb-2 text-gray-500 dark:text-gray-400" />
                           <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -349,7 +349,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg"
+                  className="btn-enhanced text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg"
                 >
                   {expense ? 'Update Expense' : 'Add Expense'}
                 </button>
