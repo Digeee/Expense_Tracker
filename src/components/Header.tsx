@@ -5,6 +5,7 @@ import { useExpenses } from '../hooks/useExpenses'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import UserProfileModal from './UserProfileModal'
+import { getCurrencySymbol } from '../utils/currency'
 
 interface HeaderProps {
   onAddExpense: () => void
@@ -42,6 +43,7 @@ const Header = ({ onAddExpense }: HeaderProps) => {
   const downloadPDF = () => {
     const doc = new jsPDF()
     const currentDate = new Date().toLocaleDateString()
+    const currencySymbol = getCurrencySymbol(userProfile.currency || 'USD')
     
     // Add title
     doc.setFontSize(20)
@@ -63,7 +65,7 @@ const Header = ({ onAddExpense }: HeaderProps) => {
       expense.title,
       expense.category,
       new Date(expense.date).toLocaleDateString(),
-      `${userProfile.currency || 'USD'} ${expense.amount.toFixed(2)}`
+      `${currencySymbol} ${expense.amount.toFixed(2)}`
     ])
     
     // Calculate total
@@ -84,7 +86,7 @@ const Header = ({ onAddExpense }: HeaderProps) => {
     const finalY = (doc as any).lastAutoTable.finalY || 75
     doc.setFontSize(14)
     doc.setFont('helvetica', 'bold')
-    doc.text(`Total: ${userProfile.currency || 'USD'} ${total.toFixed(2)}`, 20, finalY + 20)
+    doc.text(`Total: ${currencySymbol} ${total.toFixed(2)}`, 20, finalY + 20)
     
     // Save the PDF
     doc.save(`expense-report-${currentDate}.pdf`)

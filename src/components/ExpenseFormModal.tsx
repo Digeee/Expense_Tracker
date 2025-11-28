@@ -5,6 +5,7 @@ import { Expense } from '../types'
 import { useExpenses } from '../hooks/useExpenses'
 import { useUserProfile } from '../hooks/useUserProfile'
 import { formatInputDate } from '../utils/date'
+import { getCurrencySymbol } from '../utils/currency'
 
 interface ExpenseFormModalProps {
   isOpen: boolean
@@ -27,18 +28,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
   const [shake, setShake] = useState(false)
 
   // Get currency symbol for display
-  const getCurrencySymbol = () => {
-    const symbols: Record<string, string> = {
-      USD: '$',
-      EUR: '€',
-      GBP: '£',
-      JPY: '¥',
-      CAD: '$',
-      AUD: '$',
-      LKR: 'Rs'
-    }
-    return symbols[currency] || '$'
-  }
+  const currencySymbol = getCurrencySymbol(currency)
 
   // Reset form when expense changes or modal opens
   useEffect(() => {
@@ -205,7 +195,7 @@ const ExpenseFormModal = ({ isOpen, onClose, onSave, expense }: ExpenseFormModal
                   </label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
-                      {getCurrencySymbol()}
+                      {currencySymbol}
                     </span>
                     <input
                       id="amount"

@@ -9,9 +9,12 @@ import { useExpenses } from '../hooks/useExpenses'
 import { Expense } from '../types'
 import WelcomeBanner from './WelcomeBanner'
 import Chatbot from './Chatbot'
+import { useUserProfile } from '../hooks/useUserProfile'
+import { getCurrencySymbol } from '../utils/currency'
 
 const ExpenseTracker = () => {
   const { expenses, addExpense, updateExpense, deleteExpense } = useExpenses()
+  const { userProfile } = useUserProfile()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingExpense, setEditingExpense] = useState<Expense | null>(null)
   const [filters, setFilters] = useState({
@@ -71,6 +74,9 @@ const ExpenseTracker = () => {
     setEditingExpense(null)
   }
 
+  // Get currency symbol
+  const currencySymbol = getCurrencySymbol(userProfile.currency || 'USD')
+
   return (
     <div className="min-h-screen relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       {/* Floating decorative 3D elements */}
@@ -129,11 +135,11 @@ const ExpenseTracker = () => {
                     {filteredExpenses.length > 0 
                       ? new Intl.NumberFormat('en-US', {
                           style: 'currency',
-                          currency: 'USD',
+                          currency: userProfile.currency || 'USD',
                           minimumFractionDigits: 2,
                           maximumFractionDigits: 2
                         }).format(totalExpenses / filteredExpenses.length) 
-                      : '$0.00'}
+                      : `${currencySymbol}0.00`}
                   </span>
                 </div>
                 <div className="flex justify-between items-center p-3 rounded-xl neumorphic-inset">
@@ -142,11 +148,11 @@ const ExpenseTracker = () => {
                     {filteredExpenses.length > 0 
                       ? new Intl.NumberFormat('en-US', {
                           style: 'currency',
-                          currency: 'USD',
+                          currency: userProfile.currency || 'USD',
                           minimumFractionDigits: 2,
                           maximumFractionDigits: 2
                         }).format(Math.max(...filteredExpenses.map(e => e.amount))) 
-                      : '$0.00'}
+                      : `${currencySymbol}0.00`}
                   </span>
                 </div>
               </div>
