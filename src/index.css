@@ -16,13 +16,15 @@ h1, h2, h3, h4, h5, h6 {
   @apply font-extrabold;
 }
 
-/* Neumorphism styles */
+/* Enhanced Neumorphism styles */
 .neumorphic {
   background: linear-gradient(145deg, #e6e6e6, #ffffff);
   box-shadow: 8px 8px 16px #d9d9d9, 
               -8px -8px 16px #ffffff;
   border-radius: 16px;
   transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .dark .neumorphic {
@@ -52,6 +54,8 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.3s ease;
   font-weight: 800;
   letter-spacing: 0.5px;
+  border: none;
+  outline: none;
 }
 
 .neumorphic-btn:hover {
@@ -391,4 +395,73 @@ h1, h2, h3, h4, h5, h6 {
   background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
   z-index: -1;
   transform: translateZ(-20px);
+}
+
+/* Modern card styles */
+.modern-card {
+  @apply rounded-2xl p-6 transition-all duration-300;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 249, 255, 0.7) 100%);
+  border: 1px solid rgba(209, 213, 219, 0.5);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.dark .modern-card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.5) 100%);
+  border: 1px solid rgba(55, 65, 81, 0.7);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Modern button styles */
+.modern-btn {
+  @apply px-4 py-2 rounded-lg font-extrabold transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-offset-2;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.modern-btn:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.modern-btn-secondary {
+  @apply px-4 py-2 rounded-lg font-extrabold transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-offset-2;
+  background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.modern-btn-secondary:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Animated gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
+}
+
+/* Glowing effect */
+.glow {
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+.glow:hover {
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.8);
+}
+
+/* Smooth transitions */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
