@@ -203,27 +203,27 @@ const Chatbot = () => {
   return (
     <>
       {isOpen ? (
-        <div className="neumorphic fixed bottom-20 md:bottom-24 right-4 md:right-6 w-72 md:w-80 h-80 md:h-96 flex flex-col shadow-3d transform-3d-hover z-50">
-          <div className="flex justify-between items-center p-3 md:p-4 border-b border-professional">
-            <h3 className="font-display font-extrabold text-gray-900 dark:text-white flex items-center gap-2 text-sm md:text-base">
-              <MessageCircle size={16} className="md:size-20" />
+        <div className="neumorphic fixed bottom-24 right-6 w-80 h-96 flex flex-col shadow-3d transform-3d-hover z-50">
+          <div className="flex justify-between items-center p-4 border-b border-professional">
+            <h3 className="font-display font-extrabold text-gray-900 dark:text-white flex items-center gap-2">
+              <MessageCircle size={20} />
               Expense Assistant
             </h3>
             <button 
               onClick={() => setIsOpen(false)}
               className="neumorphic-btn p-1 rounded-full"
             >
-              <X size={14} className="md:size-16 text-gray-700 dark:text-gray-300" />
+              <X size={16} className="text-gray-700 dark:text-gray-300" />
             </button>
           </div>
           
-          <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-2 md:space-y-3">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3">
             {messages.map((message) => (
               <div 
                 key={message.id} 
-                className={`max-w-[85%] md:max-w-[80%] rounded-xl p-2 md:p-3 neumorphic-inset ${message.isUser ? 'ml-auto' : ''}`}
+                className={`max-w-[80%] rounded-xl p-3 neumorphic-inset ${message.isUser ? 'ml-auto' : ''}`}
               >
-                <p className={`text-xs md:text-sm font-extrabold ${message.isUser ? 'text-gray-900 dark:text-white text-right' : 'text-gray-700 dark:text-gray-300'}`}>
+                <p className={`text-sm font-extrabold ${message.isUser ? 'text-gray-900 dark:text-white text-right' : 'text-gray-700 dark:text-gray-300'}`}>
                   {message.text}
                 </p>
                 <p className={`text-xs mt-1 ${message.isUser ? 'text-gray-500 dark:text-gray-400 text-right' : 'text-gray-400 dark:text-gray-500'}`}>
@@ -234,22 +234,22 @@ const Chatbot = () => {
             <div ref={messagesEndRef} />
           </div>
           
-          <div className="p-2 md:p-3 border-t border-professional">
-            <div className="flex gap-1 md:gap-2">
+          <div className="p-3 border-t border-professional">
+            <div className="flex gap-2">
               <textarea
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ask about your expenses..."
-                className="flex-1 input-enhanced rounded-xl font-extrabold text-xs md:text-sm resize-none h-8 md:h-10"
+                className="flex-1 input-enhanced rounded-xl font-extrabold text-sm resize-none h-10"
                 rows={1}
               />
               <button
                 onClick={handleSendMessage}
-                className="neumorphic-btn p-1.5 md:p-2 rounded-xl transform-3d-hover"
+                className="neumorphic-btn p-2 rounded-xl transform-3d-hover"
                 disabled={inputValue.trim() === ''}
               >
-                <Send size={14} className="md:size-16 text-gray-700 dark:text-gray-300" />
+                <Send size={16} className="text-gray-700 dark:text-gray-300" />
               </button>
             </div>
           </div>
@@ -257,9 +257,9 @@ const Chatbot = () => {
       ) : (
         <button
           onClick={() => setIsOpen(true)}
-          className="neumorphic-btn fixed bottom-4 md:bottom-6 right-4 md:right-6 p-3 md:p-4 rounded-full shadow-3d transform-3d-hover z-50"
+          className="neumorphic-btn fixed bottom-6 right-6 p-4 rounded-full shadow-3d transform-3d-hover z-50"
         >
-          <MessageCircle size={20} className="md:size-24 text-gray-700 dark:text-gray-300" />
+          <MessageCircle size={24} className="text-gray-700 dark:text-gray-300" />
         </button>
       )}
     </>

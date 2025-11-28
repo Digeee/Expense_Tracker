@@ -56,29 +56,29 @@ const StatsCards = ({ totalExpenses, categoryTotals }: StatsCardsProps) => {
 
   return (
     <motion.div 
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
       variants={container}
       initial="hidden"
       animate="show"
     >
       {/* Total Expenses Card */}
       <motion.div 
-        className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-4 md:p-6 text-white shadow-xl relative overflow-hidden"
+        className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden"
         variants={item}
         whileHover={{ y: -5, transition: { duration: 0.2 } }}
       >
-        <div className="absolute -top-8 -right-8 w-24 h-24 md:w-32 md:h-32 rounded-full bg-white/10"></div>
-        <div className="absolute -bottom-8 -left-8 w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/5"></div>
+        <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-white/10"></div>
+        <div className="absolute -bottom-10 -left-10 w-24 h-24 rounded-full bg-white/5"></div>
         
         <div className="relative z-10">
-          <h3 className="text-base md:text-lg font-medium flex items-center gap-2">
-            <span className="text-xl md:text-2xl">💰</span>
+          <h3 className="text-lg font-medium flex items-center gap-2">
+            <span className="text-2xl">💰</span>
             Total Expenses
           </h3>
-          <p className="text-2xl md:text-3xl font-bold mt-2">
+          <p className="text-3xl font-bold mt-2">
             {formatCurrency(totalExpenses)}
           </p>
-          <div className="mt-3 md:mt-4 h-2 w-full bg-white/30 rounded-full overflow-hidden">
+          <div className="mt-4 h-2 w-full bg-white/30 rounded-full overflow-hidden">
             <motion.div 
               className="h-full bg-white rounded-full"
               initial={{ width: 0 }}
@@ -93,19 +93,19 @@ const StatsCards = ({ totalExpenses, categoryTotals }: StatsCardsProps) => {
       {topCategories.map(([category, amount], index) => (
         <motion.div 
           key={category}
-          className="bg-white dark:bg-gray-800 rounded-2xl p-4 md:p-6 shadow-xl border border-gray-100 dark:border-gray-700 relative overflow-hidden"
+          className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-700 relative overflow-hidden"
           variants={item}
           whileHover={{ y: -5, transition: { duration: 0.2 } }}
         >
-          <div className="absolute top-0 left-0 w-full h-1 md:h-2 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
+          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
           
           <div className="relative z-10">
             <div className="flex justify-between items-start">
-              <h3 className="text-base md:text-lg font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                <span className="text-xl md:text-2xl">{getCategoryIcon(category)}</span>
-                <span className="text-sm md:text-base">{category}</span>
+              <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                <span className="text-2xl">{getCategoryIcon(category)}</span>
+                {category}
               </h3>
-              <div className="w-12 h-12 md:w-16 md:h-16 rounded-lg overflow-hidden">
+              <div className="w-16 h-16 rounded-lg overflow-hidden">
                 <img 
                   src={getCategoryImage(category)} 
                   alt={category} 
@@ -114,11 +114,11 @@ const StatsCards = ({ totalExpenses, categoryTotals }: StatsCardsProps) => {
               </div>
             </div>
             
-            <p className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mt-2">
+            <p className="text-2xl font-bold text-gray-900 dark:text-white mt-2">
               {formatCurrency(amount)}
             </p>
             
-            <div className="mt-3 md:mt-4 flex items-center">
+            <div className="mt-4 flex items-center">
               <div className="h-2 flex-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                 <motion.div 
                   className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"
@@ -127,7 +127,7 @@ const StatsCards = ({ totalExpenses, categoryTotals }: StatsCardsProps) => {
                   transition={{ duration: 1, delay: 0.5 + index * 0.1 }}
                 ></motion.div>
               </div>
-              <span className="text-xs md:text-sm text-gray-500 dark:text-gray-400 ml-2">
+              <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">
                 {totalExpenses > 0 ? `${Math.round((amount / totalExpenses) * 100)}%` : '0%'}
               </span>
             </div>
@@ -140,17 +140,17 @@ const StatsCards = ({ totalExpenses, categoryTotals }: StatsCardsProps) => {
         Array.from({ length: 3 - topCategories.length }).map((_, index) => (
           <motion.div 
             key={`empty-${index}`}
-            className="bg-white dark:bg-gray-800 rounded-2xl p-4 md:p-6 shadow-xl border border-gray-100 dark:border-gray-700 opacity-70"
+            className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-700 opacity-70"
             variants={item}
           >
-            <h3 className="text-base md:text-lg font-medium text-gray-500 dark:text-gray-400 flex items-center gap-2">
-              <span className="text-xl md:text-2xl">📦</span>
-              <span className="text-sm md:text-base">No Data</span>
+            <h3 className="text-lg font-medium text-gray-500 dark:text-gray-400 flex items-center gap-2">
+              <span className="text-2xl">📦</span>
+              No Data
             </h3>
-            <p className="text-xl md:text-2xl font-bold text-gray-500 dark:text-gray-400 mt-2">
+            <p className="text-2xl font-bold text-gray-500 dark:text-gray-400 mt-2">
               {formatCurrency(0)}
             </p>
-            <div className="mt-3 md:mt-4 h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+            <div className="mt-4 h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full"></div>
           </motion.div>
         ))
       }
