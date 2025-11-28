@@ -49,10 +49,7 @@ const UserProfileModal = ({ isOpen, onClose, userProfile, onSave }: UserProfileM
         name,
         email,
         currency,
-      }
-      
-      if (photo) {
-        profileToUpdate.photo = photo
+        photo: photo || ''
       }
       
       onSave(profileToUpdate)

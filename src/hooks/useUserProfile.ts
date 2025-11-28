@@ -12,7 +12,12 @@ export const useUserProfile = () => {
   const [userProfile, setUserProfile] = useLocalStorage<UserProfile>('userProfile', defaultProfile)
 
   const updateUserProfile = (profile: UserProfile) => {
-    setUserProfile(profile)
+    // If photo is empty string, use the default photo
+    const profileToSave = {
+      ...profile,
+      photo: profile.photo || defaultProfile.photo
+    }
+    setUserProfile(profileToSave)
   }
 
   return { userProfile, updateUserProfile }
