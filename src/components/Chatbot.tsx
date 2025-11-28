@@ -203,7 +203,7 @@ const Chatbot = () => {
   return (
     <>
       {isOpen ? (
-        <div className="neumorphic fixed bottom-24 right-6 w-80 h-96 flex flex-col shadow-3d transform-3d-hover z-50">
+        <div className="enhanced-card fixed bottom-24 right-6 w-80 h-96 flex flex-col shadow-3d transform-3d-hover z-50">
           <div className="flex justify-between items-center p-4 border-b border-professional">
             <h3 className="font-display font-extrabold text-gray-900 dark:text-white flex items-center gap-2">
               <MessageCircle size={20} />
@@ -257,9 +257,9 @@ const Chatbot = () => {
       ) : (
         <button
           onClick={() => setIsOpen(true)}
-          className="neumorphic-btn fixed bottom-6 right-6 p-4 rounded-full shadow-3d transform-3d-hover z-50"
+          className="fab"
         >
-          <MessageCircle size={24} className="text-gray-700 dark:text-gray-300" />
+          <MessageCircle size={24} className="text-white" />
         </button>
       )}
     </>
