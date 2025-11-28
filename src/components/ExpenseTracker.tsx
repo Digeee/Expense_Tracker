@@ -71,9 +71,9 @@ const ExpenseTracker = () => {
   return (
     <div className="min-h-screen relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
       {/* Floating decorative 3D elements */}
-      <div className="floating-3d-element top-20 left-10 w-24 h-24"></div>
-      <div className="floating-3d-element top-40 right-20 w-32 h-32 animation-delay-2000"></div>
-      <div className="floating-3d-element bottom-40 left-1/4 w-20 h-20 animation-delay-4000"></div>
+      <div className="floating-3d-element top-20 left-10 w-24 h-24 animate-float"></div>
+      <div className="floating-3d-element top-40 right-20 w-32 h-32 animation-delay-2000 animate-float"></div>
+      <div className="floating-3d-element bottom-40 left-1/4 w-20 h-20 animation-delay-4000 animate-float"></div>
       
       <Header onAddExpense={handleAddExpense} />
       
@@ -91,14 +91,14 @@ const ExpenseTracker = () => {
         
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
-            <div className="neumorphic p-6 shadow-3d transform-3d-hover">
+            <div className="modern-card p-6 shadow-enhanced transform-3d-hover glow">
               <Filters 
                 filters={filters} 
                 onFilterChange={setFilters} 
               />
             </div>
             
-            <div className="neumorphic p-6 shadow-3d transform-3d-hover">
+            <div className="modern-card p-6 shadow-enhanced transform-3d-hover glow">
               <ExpenseList 
                 expenses={filteredExpenses} 
                 onEdit={handleEditExpense} 
@@ -108,13 +108,13 @@ const ExpenseTracker = () => {
           </div>
           
           <div className="space-y-8">
-            <div className="neumorphic p-6 shadow-3d transform-3d-hover">
+            <div className="modern-card p-6 shadow-enhanced transform-3d-hover glow">
               <Charts expenses={filteredExpenses} />
             </div>
             
             {/* Additional info card */}
-            <div className="neumorphic p-6 shadow-3d transform-3d-hover">
-              <h3 className="text-2xl font-display font-extrabold text-gray-900 dark:text-white mb-4">Expense Insights</h3>
+            <div className="modern-card p-6 shadow-enhanced transform-3d-hover glow">
+              <h3 className="text-2xl font-display font-extrabold text-gray-900 dark:text-white mb-4 gradient-text">Expense Insights</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center p-3 rounded-xl neumorphic-inset">
                   <span className="text-body text-gray-700 dark:text-gray-300 font-extrabold">Total Transactions</span>
