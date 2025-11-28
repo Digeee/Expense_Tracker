@@ -28,40 +28,42 @@ const Header = ({ onAddExpense }: HeaderProps) => {
   }, [])
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode)
-    if (!darkMode) {
+    const newDarkMode = !darkMode
+    setDarkMode(newDarkMode)
+    localStorage.setItem('theme', newDarkMode ? 'dark' : 'light')
+    
+    if (newDarkMode) {
       document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
     } else {
       document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
     }
   }
 
   const downloadPDF = () => {
     const doc = new jsPDF()
+    const currentDate = new Date().toLocaleDateString()
     
     // Add title
     doc.setFontSize(20)
-    doc.text('Expense Report', 105, 20, { align: 'center' })
-    
-    // Add user details
-    doc.setFontSize(12)
-    doc.text(`Name: ${userProfile.name || 'N/A'}`, 20, 35)
-    doc.text(`Email: ${userProfile.email || 'N/A'}`, 20, 45)
-    doc.text(`Currency: ${userProfile.currency || 'USD'}`, 20, 55)
+    doc.setFont('helvetica', 'bold')
+    doc.text('Expense Report', 20, 20)
     
     // Add date
-    const currentDate = new Date().toLocaleDateString()
-    doc.text(`Report Date: ${currentDate}`, 20, 65)
+    doc.setFontSize(12)
+    doc.setFont('helvetica', 'normal')
+    doc.text(`Generated on: ${currentDate}`, 20, 30)
+    
+    // Add user info if available
+    if (userProfile.name) {
+      doc.text(`User: ${userProfile.name}`, 20, 40)
+    }
     
     // Add expenses table
     const tableData = expenses.map(expense => [
       expense.title,
       expense.category,
       new Date(expense.date).toLocaleDateString(),
-      `${userProfile.currency || 'USD'} ${expense.amount.toFixed(2)}`,
-      expense.receiptImage ? 'Yes' : 'No'
+      `${userProfile.currency || 'USD'} ${expense.amount.toFixed(2)}`
     ])
     
     // Calculate total
@@ -69,9 +71,9 @@ const Header = ({ onAddExpense }: HeaderProps) => {
     
     // Add table
     autoTable(doc, {
-      head: [['Description', 'Category', 'Date', 'Amount', 'Receipt']],
+      head: [['Description', 'Category', 'Date', 'Amount']],
       body: tableData,
-      startY: 75,
+      startY: 50,
       styles: { fontSize: 10 },
       headStyles: { fillColor: [59, 130, 246] }, // Professional blue color
       alternateRowStyles: { fillColor: [240, 240, 240] },
@@ -154,7 +156,7 @@ const Header = ({ onAddExpense }: HeaderProps) => {
             
             <button
               onClick={onAddExpense}
-              className="neumorphic-btn text-gray-900 dark:text-white font-extrabold py-2.5 px-5 rounded-xl transform-3d-hover transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 glow"
+              className="btn-enhanced text-white font-extrabold py-2.5 px-5 rounded-xl transform-3d-hover transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 glow"
             >
               <div className="flex items-center gap-2">
                 <Plus size={20} />
