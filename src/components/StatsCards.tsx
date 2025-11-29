@@ -63,7 +63,7 @@ const StatsCards = ({ totalExpenses, categoryTotals }: StatsCardsProps) => {
     >
       {/* Total Expenses Card */}
       <motion.div 
-        className="enhanced-card text-white shadow-xl relative overflow-hidden transform-3d-hover glow animated-bg"
+        className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden transform-3d-hover glow"
         variants={item}
         whileHover={{ y: -5, transition: { duration: 0.2 } }}
       >
@@ -93,7 +93,7 @@ const StatsCards = ({ totalExpenses, categoryTotals }: StatsCardsProps) => {
       {topCategories.map(([category, amount], index) => (
         <motion.div 
           key={category}
-          className="enhanced-card shadow-xl border border-gray-100 dark:border-gray-700 relative overflow-hidden transform-3d-hover glow"
+          className="modern-card p-6 shadow-xl border border-gray-100 dark:border-gray-700 relative overflow-hidden transform-3d-hover glow"
           variants={item}
           whileHover={{ y: -5, transition: { duration: 0.2 } }}
         >
@@ -140,7 +140,7 @@ const StatsCards = ({ totalExpenses, categoryTotals }: StatsCardsProps) => {
         Array.from({ length: 3 - topCategories.length }).map((_, index) => (
           <motion.div 
             key={`empty-${index}`}
-            className="enhanced-card shadow-xl border border-gray-100 dark:border-gray-700 opacity-70 transform-3d-hover"
+            className="modern-card p-6 shadow-xl border border-gray-100 dark:border-gray-700 opacity-70 transform-3d-hover"
             variants={item}
           >
             <h3 className="text-lg font-medium text-gray-500 dark:text-gray-400 flex items-center gap-2">

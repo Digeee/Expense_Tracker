@@ -46,7 +46,7 @@ const Charts = ({ expenses }: ChartsProps) => {
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="enhanced-card p-4 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg glow">
+        <div className="modern-card p-4 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg glow">
           <p className="font-semibold text-gray-900 dark:text-white">{`${payload[0].name}`}</p>
           <p className="text-gray-700 dark:text-gray-300">{`Amount: ${formatCurrency(payload[0].value, currency)}`}</p>
           <p className="text-sm text-gray-500 dark:text-gray-400">{`Percentage: ${((payload[0].value / categoryData.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%`}</p>
@@ -60,7 +60,7 @@ const Charts = ({ expenses }: ChartsProps) => {
   const CustomLineTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="enhanced-card p-4 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg glow">
+        <div className="modern-card p-4 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg glow">
           <p className="font-semibold text-gray-900 dark:text-white">{`Month: ${label}`}</p>
           <p className="text-gray-700 dark:text-gray-300">{`Total: ${formatCurrency(payload[0].value, currency)}`}</p>
         </div>
@@ -80,7 +80,7 @@ const Charts = ({ expenses }: ChartsProps) => {
 
   return (
     <div className="space-y-6 md:space-y-8">
-      <div className="enhanced-card p-4 md:p-6 shadow-xl glow">
+      <div className="modern-card p-4 md:p-6 shadow-xl glow">
         <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-3 md:mb-4 flex items-center gap-2">
           <span className="text-lg md:text-xl">📊</span>
           Category Breakdown
@@ -117,7 +117,7 @@ const Charts = ({ expenses }: ChartsProps) => {
         )}
       </div>
 
-      <div className="enhanced-card p-4 md:p-6 shadow-xl glow">
+      <div className="modern-card p-4 md:p-6 shadow-xl glow">
         <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-3 md:mb-4 flex items-center gap-2">
           <span className="text-lg md:text-xl">📈</span>
           Monthly Trend

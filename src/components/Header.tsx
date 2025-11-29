@@ -1,17 +1,18 @@
-import { Plus, Sun, Moon, Download, User, MessageCircle } from 'lucide-react'
+import { Plus, Sun, Moon, Download, User } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useUserProfile } from '../hooks/useUserProfile'
 import { useExpenses } from '../hooks/useExpenses'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import UserProfileModal from './UserProfileModal'
-import { getCurrencySymbol } from '../utils/currency'
 
 interface HeaderProps {
   onAddExpense: () => void
+  onOpenProfile?: () => void
+  userProfilePhoto?: string
 }
 
-const Header = ({ onAddExpense }: HeaderProps) => {
+const Header = ({ onAddExpense, onOpenProfile, userProfilePhoto }: HeaderProps) => {
   const [darkMode, setDarkMode] = useState(false)
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
   const { userProfile, updateUserProfile } = useUserProfile()
@@ -29,43 +30,40 @@ const Header = ({ onAddExpense }: HeaderProps) => {
   }, [])
 
   const toggleDarkMode = () => {
-    const newDarkMode = !darkMode
-    setDarkMode(newDarkMode)
-    localStorage.setItem('theme', newDarkMode ? 'dark' : 'light')
-    
-    if (newDarkMode) {
+    setDarkMode(!darkMode)
+    if (!darkMode) {
       document.documentElement.classList.add('dark')
+      localStorage.setItem('theme', 'dark')
     } else {
       document.documentElement.classList.remove('dark')
+      localStorage.setItem('theme', 'light')
     }
   }
 
   const downloadPDF = () => {
     const doc = new jsPDF()
-    const currentDate = new Date().toLocaleDateString()
-    const currencySymbol = getCurrencySymbol(userProfile.currency || 'USD')
     
     // Add title
     doc.setFontSize(20)
-    doc.setFont('helvetica', 'bold')
-    doc.text('Expense Report', 20, 20)
+    doc.text('Expense Report', 105, 20, { align: 'center' })
+    
+    // Add user details
+    doc.setFontSize(12)
+    doc.text(`Name: ${userProfile.name || 'N/A'}`, 20, 35)
+    doc.text(`Email: ${userProfile.email || 'N/A'}`, 20, 45)
+    doc.text(`Currency: ${userProfile.currency || 'USD'}`, 20, 55)
     
     // Add date
-    doc.setFontSize(12)
-    doc.setFont('helvetica', 'normal')
-    doc.text(`Generated on: ${currentDate}`, 20, 30)
-    
-    // Add user info if available
-    if (userProfile.name) {
-      doc.text(`User: ${userProfile.name}`, 20, 40)
-    }
+    const currentDate = new Date().toLocaleDateString()
+    doc.text(`Report Date: ${currentDate}`, 20, 65)
     
     // Add expenses table
     const tableData = expenses.map(expense => [
       expense.title,
       expense.category,
       new Date(expense.date).toLocaleDateString(),
-      `${currencySymbol} ${expense.amount.toFixed(2)}`
+      `${userProfile.currency || 'USD'} ${expense.amount.toFixed(2)}`,
+      expense.receiptImage ? 'Yes' : 'No'
     ])
     
     // Calculate total
@@ -73,9 +71,9 @@ const Header = ({ onAddExpense }: HeaderProps) => {
     
     // Add table
     autoTable(doc, {
-      head: [['Description', 'Category', 'Date', 'Amount']],
+      head: [['Description', 'Category', 'Date', 'Amount', 'Receipt']],
       body: tableData,
-      startY: 50,
+      startY: 75,
       styles: { fontSize: 10 },
       headStyles: { fillColor: [59, 130, 246] }, // Professional blue color
       alternateRowStyles: { fillColor: [240, 240, 240] },
@@ -86,30 +84,25 @@ const Header = ({ onAddExpense }: HeaderProps) => {
     const finalY = (doc as any).lastAutoTable.finalY || 75
     doc.setFontSize(14)
     doc.setFont('helvetica', 'bold')
-    doc.text(`Total: ${currencySymbol} ${total.toFixed(2)}`, 20, finalY + 20)
+    doc.text(`Total: ${userProfile.currency || 'USD'} ${total.toFixed(2)}`, 20, finalY + 20)
     
     // Save the PDF
     doc.save(`expense-report-${currentDate}.pdf`)
   }
 
-  // Dispatch event to open chatbot
-  const openChatbot = () => {
-    window.dispatchEvent(new CustomEvent('openChatbot'))
-  }
-
   return (
     <>
-      <header className="neumorphic mx-4 mt-4 p-4 sticky top-4 z-10 transform-3d glow">
+      <header className="bg-white dark:bg-gray-900 shadow-lg mx-4 mt-4 p-4 rounded-2xl sticky top-4 z-10">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 rounded-xl neumorphic-btn flex items-center justify-center animate-pulse-slow transform-3d-hover glow">
-              <span className="text-gray-800 dark:text-white font-extrabold text-xl">$</span>
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center animate-pulse-slow shadow-md">
+              <span className="text-white font-bold text-xl">$</span>
             </div>
             <div>
-              <h1 className="text-3xl font-display font-extrabold text-gray-900 dark:text-white transform-3d-hover gradient-text">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
                 Expense Tracker
               </h1>
-              <p className="text-sm text-gray-500 dark:text-gray-400 hidden sm:block font-bold">
+              <p className="text-sm text-gray-500 dark:text-gray-400 hidden sm:block">
                 Manage your finances with ease
               </p>
             </div>
@@ -118,30 +111,22 @@ const Header = ({ onAddExpense }: HeaderProps) => {
           <div className="flex items-center space-x-3">
             <button
               onClick={downloadPDF}
-              className="neumorphic-btn p-2.5 rounded-xl transform-3d-hover glow"
+              className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               aria-label="Download PDF"
             >
               <Download className="text-gray-700 dark:text-gray-300" size={20} />
             </button>
             
             <button
-              onClick={openChatbot}
-              className="neumorphic-btn p-2.5 rounded-xl transform-3d-hover glow"
-              aria-label="Chat Assistant"
-            >
-              <MessageCircle className="text-gray-700 dark:text-gray-300" size={20} />
-            </button>
-            
-            <button
-              onClick={() => setIsProfileModalOpen(true)}
-              className="neumorphic-btn p-2.5 rounded-xl transform-3d-hover glow"
+              onClick={onOpenProfile || (() => setIsProfileModalOpen(true))}
+              className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               aria-label="User Profile"
             >
-              {userProfile.photo ? (
+              {userProfilePhoto || userProfile.photo ? (
                 <img 
-                  src={userProfile.photo} 
+                  src={userProfilePhoto || userProfile.photo} 
                   alt="Profile" 
-                  className="w-6 h-6 rounded-full object-cover transform-3d-hover"
+                  className="w-6 h-6 rounded-full object-cover"
                 />
               ) : (
                 <User className="text-gray-700 dark:text-gray-300" size={20} />
@@ -150,7 +135,7 @@ const Header = ({ onAddExpense }: HeaderProps) => {
             
             <button
               onClick={toggleDarkMode}
-              className="neumorphic-btn p-2.5 rounded-xl transform-3d-hover glow"
+              className="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               {darkMode ? <Sun className="text-yellow-400" size={20} /> : <Moon className="text-gray-700" size={20} />}
@@ -158,12 +143,10 @@ const Header = ({ onAddExpense }: HeaderProps) => {
             
             <button
               onClick={onAddExpense}
-              className="btn-enhanced text-white font-extrabold py-2.5 px-5 rounded-xl transform-3d-hover transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 glow"
+              className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium py-2.5 px-5 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg"
             >
-              <div className="flex items-center gap-2">
-                <Plus size={20} />
-                <span className="hidden sm:inline font-extrabold">Add Expense</span>
-              </div>
+              <Plus size={20} />
+              <span className="hidden sm:inline">Add Expense</span>
             </button>
           </div>
         </div>
