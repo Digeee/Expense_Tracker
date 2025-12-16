@@ -9,6 +9,7 @@ import { useExpenses } from '../hooks/useExpenses'
 import { Expense } from '../types'
 import WelcomeBanner from './WelcomeBanner'
 import Chatbot from './Chatbot'
+import Footer from './Footer'
 
 const ExpenseTracker = () => {
   const { expenses, addExpense, updateExpense, deleteExpense } = useExpenses()
@@ -160,6 +161,8 @@ const ExpenseTracker = () => {
       />
       
       <Chatbot />
+      
+      <Footer />
     </div>
   )
 }
