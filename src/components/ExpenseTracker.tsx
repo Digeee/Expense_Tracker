@@ -10,6 +10,7 @@ import { Expense } from '../types'
 import WelcomeBanner from './WelcomeBanner'
 import Chatbot from './Chatbot'
 import Footer from './Footer'
+import BannerSlider from './BannerSlider'
 
 const ExpenseTracker = () => {
   const { expenses, addExpense, updateExpense, deleteExpense } = useExpenses()
@@ -77,6 +78,11 @@ const ExpenseTracker = () => {
       <div className="floating-3d-element bottom-40 left-1/4 w-20 h-20 animation-delay-4000 animate-float"></div>
       
       <Header onAddExpense={handleAddExpense} />
+      
+      {/* Banner Slider */}
+      <div className="container mx-auto px-4 pt-8">
+        <BannerSlider />
+      </div>
       
       <main className="container mx-auto px-4 py-8">
         {showWelcomeBanner && (
