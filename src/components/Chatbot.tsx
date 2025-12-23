@@ -14,6 +14,11 @@ interface Message {
 const Chatbot = () => {
   const { expenses } = useExpenses()
   const [isOpen, setIsOpen] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    // Check for saved theme preference or default to false
+    const savedTheme = localStorage.getItem('chatbot-theme');
+    return savedTheme === 'dark';
+  });
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -36,6 +41,15 @@ const Chatbot = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
+
+  // Save theme preference to localStorage
+  useEffect(() => {
+    localStorage.setItem('chatbot-theme', isDarkMode ? 'dark' : 'light');
+  }, [isDarkMode]);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   // Calculate expenses for last week
   const calculateLastWeekExpenses = () => {
@@ -203,30 +217,74 @@ const Chatbot = () => {
   return (
     <>
       {isOpen ? (
-        <div className="neumorphic fixed bottom-24 right-6 w-80 h-96 flex flex-col shadow-3d transform-3d-hover z-50 md:w-96 md:h-[32rem]">
-          <div className="flex justify-between items-center p-4 border-b border-professional">
-            <h3 className="font-display font-extrabold text-gray-900 dark:text-white flex items-center gap-2">
+        <div className="neumorphic fixed bottom-24 right-6 w-80 h-96 flex flex-col shadow-3d transform-3d-hover z-50 md:w-96 md:h-[32rem]" 
+             style={{
+               '--bg-color': isDarkMode ? '#0d1117' : '#ffffff',
+               '--text-color': isDarkMode ? '#e2e8f0' : '#1e293b',
+               '--border-color': isDarkMode ? '#374151' : '#e5e7eb',
+               backgroundColor: 'var(--bg-color)',
+               color: 'var(--text-color)',
+             } as React.CSSProperties}>
+          <div className="flex justify-between items-center p-4 border-b" 
+               style={{ borderColor: 'var(--border-color)' }}>
+            <h3 className="font-display font-extrabold flex items-center gap-2">
               <MessageCircle size={20} />
               Expense Assistant
             </h3>
-            <button 
-              onClick={() => setIsOpen(false)}
-              className="neumorphic-btn p-1 rounded-full"
-            >
-              <X size={16} className="text-gray-700 dark:text-gray-300" />
-            </button>
+            <div className="flex gap-2">
+              <button 
+                onClick={toggleTheme}
+                className="neumorphic-btn p-1.5 rounded-full"
+                aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+              >
+                {isDarkMode ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-yellow-400">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-700">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                  </svg>
+                )}
+              </button>
+              <button 
+                onClick={() => setIsOpen(false)}
+                className="neumorphic-btn p-1 rounded-full ml-1"
+              >
+                <X size={16} />
+              </button>
+            </div>
           </div>
           
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3" 
+               style={{ backgroundColor: isDarkMode ? '#0d1117' : '#ffffff' }}>
             {messages.map((message) => (
               <div 
                 key={message.id} 
-                className={`max-w-[80%] rounded-xl p-3 neumorphic-inset ${message.isUser ? 'ml-auto' : ''}`}
-              >
-                <p className={`text-sm font-extrabold ${message.isUser ? 'text-gray-900 dark:text-white text-right' : 'text-gray-700 dark:text-gray-300'}`}>
+                className={`max-w-[80%] rounded-xl p-3 ${message.isUser ? 'ml-auto' : ''}`}
+                style={{
+                  backgroundColor: message.isUser 
+                    ? (isDarkMode ? '#1a1f27' : '#dbeafe') 
+                    : (isDarkMode ? '#1a1f27' : '#f3f4f6'),
+                  boxShadow: isDarkMode 
+                    ? 'inset 4px 4px 8px #0a0d12, inset -4px -4px 8px #1d232d' 
+                    : 'inset 4px 4px 8px #d9d9d9, inset -4px -4px 8px #ffffff',
+                  borderRadius: '12px',
+                }}>
+                <p className={`text-sm font-extrabold ${message.isUser ? 'text-right' : ''}`}
+                   style={{ color: isDarkMode ? '#e2e8f0' : '#1e293b' }}>
                   {message.text}
                 </p>
-                <p className={`text-xs mt-1 ${message.isUser ? 'text-gray-500 dark:text-gray-400 text-right' : 'text-gray-400 dark:text-gray-500'}`}>
+                <p className={`text-xs mt-1 ${message.isUser ? 'text-right' : ''}`}
+                   style={{ color: isDarkMode ? '#9ca3af' : '#6b7280' }}>
                   {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
               </div>
@@ -234,22 +292,30 @@ const Chatbot = () => {
             <div ref={messagesEndRef} />
           </div>
           
-          <div className="p-3 border-t border-professional">
+          <div className="p-3 border-t" 
+               style={{ borderColor: 'var(--border-color)' }}>
             <div className="flex gap-2">
               <textarea
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ask about your expenses..."
-                className="flex-1 input-enhanced rounded-xl font-extrabold text-sm resize-none h-10"
+                className="flex-1 rounded-xl font-extrabold text-sm resize-none h-10"
+                style={{
+                  backgroundColor: isDarkMode ? '#0d1117' : '#ffffff',
+                  color: isDarkMode ? '#e2e8f0' : '#1e293b',
+                  border: '1px solid',
+                  borderColor: isDarkMode ? '#374151' : '#d1d5db',
+                  padding: '0.75rem',
+                }}
                 rows={1}
               />
               <button
                 onClick={handleSendMessage}
-                className="neumorphic-btn p-2 rounded-xl transform-3d-hover"
+                className="neumorphic-btn p-2 rounded-xl transform-3d-hover disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={inputValue.trim() === ''}
               >
-                <Send size={16} className="text-gray-700 dark:text-gray-300" />
+                <Send size={16} style={{ color: isDarkMode ? '#9ca3af' : '#374151' }} />
               </button>
             </div>
           </div>
@@ -259,7 +325,7 @@ const Chatbot = () => {
           onClick={() => setIsOpen(true)}
           className="neumorphic-btn fixed bottom-6 right-6 p-3 rounded-full shadow-3d transform-3d-hover z-50 md:p-4"
         >
-          <MessageCircle size={20} className="text-gray-700 dark:text-gray-300 md:size-24" />
+          <MessageCircle size={20} style={{ color: isDarkMode ? '#9ca3af' : '#374151' }} />
         </button>
       )}
     </>
